@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Debanjan — Ecological Modeling &amp; Resilience Research</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1E2E27;
+    --paper:#E9EDE3;
+    --paper-alt:#DEE4D4;
+    --teal:#2E6B62;
+    --clay:#A65C36;
+    --gold:#B4922C;
+    --muted:#5C6B60;
+    --line: rgba(30,46,39,0.16);
+    --max-w: 780px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{ background:var(--gold); color:var(--ink); }
+
+  a{ color:var(--teal); text-decoration-color: rgba(46,107,98,0.4); text-underline-offset:3px; }
+  a:hover{ color:var(--clay); }
+
+  .wrap{
+    max-width:var(--max-w);
+    margin:0 auto;
+    padding:0 28px;
+  }
+
+  /* ---------- background contour texture ---------- */
+  .contours{
+    position:fixed;
+    inset:0;
+    z-index:-1;
+    opacity:0.5;
+    pointer-events:none;
+  }
+
+  /* ---------- coordinate stamp ---------- */
+  .stamp{
+    position:fixed;
+    top:24px;
+    right:28px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.03em;
+    color:var(--muted);
+    text-align:right;
+    line-height:1.5;
+    z-index:5;
+  }
+  @media (max-width:640px){ .stamp{ display:none; } }
+
+  /* ---------- hero ---------- */
+  header.hero{
+    padding:120px 0 80px;
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--teal);
+    margin:0 0 18px;
+  }
+  h1{
+    font-family:'Fraunces', serif;
+    font-optical-sizing:auto;
+    font-weight:500;
+    font-size:clamp(40px, 6vw, 64px);
+    line-height:1.05;
+    letter-spacing:-0.01em;
+    margin:0 0 22px;
+    color:var(--ink);
+  }
+  h1 .role{
+    display:block;
+    font-size:0.36em;
+    font-weight:400;
+    font-style:italic;
+    color:var(--muted);
+    margin-top:14px;
+    letter-spacing:0;
+  }
+  .thesis{
+    font-size:19px;
+    max-width:52ch;
+    color:#3A473F;
+    margin:0 0 34px;
+  }
+  .hero-links{
+    display:flex;
+    gap:22px;
+    flex-wrap:wrap;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+  }
+  .hero-links a{ white-space:nowrap; }
+
+  /* ---------- contour divider ---------- */
+  .divider{
+    max-width:var(--max-w);
+    margin:0 auto;
+    padding:0 28px;
+  }
+  .divider svg{ width:100%; height:auto; display:block; }
+
+  /* ---------- section shell ---------- */
+  section{ padding:64px 0; }
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    margin-bottom:38px;
+    border-bottom:1px solid var(--line);
+    padding-bottom:14px;
+  }
+  .section-head h2{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-size:28px;
+    margin:0;
+  }
+  .section-head .tag{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    color:var(--muted);
+    letter-spacing:0.04em;
+  }
+
+  /* ---------- research cards ---------- */
+  .research-grid{
+    display:grid;
+    gap:2px;
+    background:var(--line);
+    border:1px solid var(--line);
+  }
+  .rcard{
+    background:var(--paper);
+    padding:28px 26px;
+    position:relative;
+  }
+  .rcard .coord{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:10.5px;
+    color:var(--muted);
+    letter-spacing:0.04em;
+  }
+  .rcard h3{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-size:20px;
+    margin:10px 0 10px;
+  }
+  .rcard p{ margin:0; color:#3A473F; font-size:15px; }
+  .rcard .species{
+    font-style:italic;
+    color:var(--clay);
+  }
+
+  /* ---------- publications / work ---------- */
+  .worklist{ list-style:none; margin:0; padding:0; }
+  .worklist li{
+    display:grid;
+    grid-template-columns:76px 1fr;
+    gap:20px;
+    padding:20px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .worklist li:first-child{ padding-top:0; }
+  .worklist .year{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+    color:var(--teal);
+    padding-top:3px;
+  }
+  .worklist .status{
+    display:block;
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    color:var(--muted);
+    margin-top:4px;
+  }
+  .worklist h4{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-size:17px;
+    margin:0 0 6px;
+  }
+  .worklist p{ margin:0; font-size:14px; color:var(--muted); }
+
+  /* ---------- about ---------- */
+  .about p{ font-size:16px; color:#3A473F; margin:0 0 16px; }
+
+  /* ---------- contact / footer ---------- */
+  footer{
+    padding:60px 0 90px;
+  }
+  .contact-box{
+    border:1px solid var(--line);
+    padding:34px 30px;
+    background:var(--paper-alt);
+  }
+  .contact-box h2{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-size:24px;
+    margin:0 0 12px;
+  }
+  .contact-box p{ margin:0 0 20px; color:#3A473F; }
+  .contact-row{
+    display:flex;
+    gap:24px;
+    flex-wrap:wrap;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13.5px;
+  }
+  .foot-note{
+    margin-top:50px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    color:var(--muted);
+    text-align:center;
+  }
+
+  .edit-flag{
+    display:inline-block;
+    background:var(--gold);
+    color:var(--ink);
+    font-family:'IBM Plex Mono', monospace;
+    font-size:9.5px;
+    letter-spacing:0.05em;
+    padding:1px 6px;
+    margin-left:8px;
+    vertical-align:middle;
+    border-radius:2px;
+  }
+</style>
+</head>
+<body>
+
+<svg class="contours" viewBox="0 0 1200 1600" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="#2E6B62" stroke-width="1">
+    <path d="M -50 200 Q 300 100 600 220 T 1250 180" opacity="0.15"/>
+    <path d="M -50 260 Q 320 160 600 280 T 1250 240" opacity="0.13"/>
+    <path d="M -50 320 Q 340 220 600 340 T 1250 300" opacity="0.11"/>
+    <path d="M -50 640 Q 280 520 620 650 T 1250 600" opacity="0.14"/>
+    <path d="M -50 700 Q 300 580 620 710 T 1250 660" opacity="0.12"/>
+    <path d="M -50 760 Q 320 640 620 770 T 1250 720" opacity="0.10"/>
+    <path d="M -50 1080 Q 260 980 640 1120 T 1250 1040" opacity="0.13"/>
+    <path d="M -50 1140 Q 280 1040 640 1180 T 1250 1100" opacity="0.11"/>
+    <path d="M -50 1400 Q 300 1300 620 1440 T 1250 1360" opacity="0.14"/>
+  </g>
+  <g fill="#A65C36">
+    <circle cx="640" cy="230" r="2.5" opacity="0.5"/>
+    <circle cx="700" cy="255" r="2.5" opacity="0.4"/>
+    <circle cx="580" cy="660" r="2.5" opacity="0.5"/>
+    <circle cx="660" cy="700" r="2.5" opacity="0.4"/>
+    <circle cx="610" cy="1110" r="2.5" opacity="0.5"/>
+  </g>
+</svg>
+
+<div class="stamp">
+  26.3017° N, 98.1633° W<br>
+  Edinburg, TX — Rio Grande Valley
+</div>
+
+<div class="wrap">
+  <header class="hero">
+    <p class="eyebrow">Field notes · Range maps · Resilience</p>
+    <h1>
+      Debanjan <span style="color:var(--muted)">[Last&nbsp;Name]</span>
+      <span class="role">Postdoctoral Researcher, University of Texas Rio Grande Valley</span>
+    </h1>
+    <p class="thesis">
+      I model where species can survive as their climate moves out from under them — from locust
+      outbreaks in the Rio Grande Valley to pollinator ranges across the Himalaya — and translate
+      that science into resilience education for the communities living in the path of change.
+    </p>
+    <div class="hero-links">
+      <a href="#research">Research →</a>
+      <a href="#work">Selected Work →</a>
+      <a href="cv.pdf">Download CV ↓</a>
+      <a href="#contact">Contact →</a>
+    </div>
+  </header>
+</div>
+
+<div class="divider">
+  <svg viewBox="0 0 780 20" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0 10 Q 195 2 390 10 T 780 10" fill="none" stroke="#2E6B62" stroke-width="1" opacity="0.4"/>
+  </svg>
+</div>
+
+<div class="wrap">
+
+  <section id="about" class="about">
+    <div class="section-head">
+      <h2>About</h2>
+      <span class="tag">01 — Overview</span>
+    </div>
+    <p>
+      I'm a postdoctoral researcher working at the intersection of ecological modeling, species
+      distribution science, and community resilience education. My work sits between two scales:
+      the fine-grained climatic tolerances of individual species, and the lived, place-based
+      experience of communities facing environmental change in the Rio Grande Valley.
+    </p>
+    <p>
+      Current projects span locust and pollinator distribution modeling under future climate
+      scenarios, and a multi-year resilience education initiative for students and community
+      leaders in Hidalgo and Cameron counties.
+      <span class="edit-flag">EDIT ME</span>
+    </p>
+  </section>
+
+  <section id="research">
+    <div class="section-head">
+      <h2>Research Areas</h2>
+      <span class="tag">02 — Current Work</span>
+    </div>
+    <div class="research-grid">
+      <div class="rcard">
+        <span class="coord">SDM · BIOMOD2 · HPC</span>
+        <h3>Locust Distribution Modeling</h3>
+        <p>
+          Species distribution modeling for <span class="species">Schistocerca piceifrons</span>
+          across the Rio Grande Valley, examining habitat overlap and hybridization zones under
+          shifting climate envelopes. Manuscript in preparation.
+        </p>
+      </div>
+      <div class="rcard">
+        <span class="coord">25 SPECIES · SSP245 / SSP585</span>
+        <h3>Pollinator Range Modeling</h3>
+        <p>
+          Multi-species distribution modeling for Lepidoptera, Hymenoptera, and Diptera pollinators
+          across Uttarakhand and Himachal Pradesh, projected against future climate scenarios using
+          topographic, land-cover, and bioclimatic predictors.
+        </p>
+      </div>
+      <div class="rcard">
+        <span class="coord">HIDALGO &amp; CAMERON CO. · 3-YR</span>
+        <h3>Place-Based Resilience Education</h3>
+        <p>
+          A community resilience education program running parallel Student Science and Community
+          Leadership tracks, built with public health and conservation partners across the Valley.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="work">
+    <div class="section-head">
+      <h2>Selected Work</h2>
+      <span class="tag">03 — Publications &amp; Proposals</span>
+    </div>
+    <ul class="worklist">
+      <li>
+        <div class="year">2026<span class="status">In Prep</span></div>
+        <div>
+          <h4>Species distribution modeling of <em>Schistocerca piceifrons</em> in the Rio Grande Valley</h4>
+          <p>Manuscript in preparation — target journal TBD. <span class="edit-flag">EDIT ME</span></p>
+        </div>
+      </li>
+      <li>
+        <div class="year">2026<span class="status">Proposal</span></div>
+        <div>
+          <h4>JUNTOS: Place-Based Resilience Education in the Rio Grande Valley</h4>
+          <p>Grant proposal, Gulf Research Program / National Academies. With T. P. Feria-Arroyo (PI).</p>
+        </div>
+      </li>
+      <li>
+        <div class="year">—<span class="status">Ongoing</span></div>
+        <div>
+          <h4>Multi-species pollinator distribution modeling, Uttarakhand &amp; Himachal Pradesh</h4>
+          <p>25-species climate projection pipeline run on TACC Lonestar6.</p>
+        </div>
+      </li>
+    </ul>
+    <p style="font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--muted); margin-top:20px;">
+      + add your full publication list, DOIs, and links here
+    </p>
+  </section>
+
+  <section id="contact">
+    <div class="contact-box">
+      <h2>Get in touch</h2>
+      <p>Open to collaboration on species distribution modeling, climate resilience education,
+        and community-based conservation research.</p>
+      <div class="contact-row">
+        <a href="mailto:your.email@utrgv.edu">your.email@utrgv.edu</a>
+        <a href="https://github.com/yourusername">GitHub ↗</a>
+        <a href="https://scholar.google.com/">Google Scholar ↗</a>
+        <a href="https://linkedin.com/in/yourprofile">LinkedIn ↗</a>
+      </div>
+    </div>
+    <p class="foot-note">Rio Grande Valley, Texas — updated 2026</p>
+  </section>
+
+</div>
+
+</body>
+</html>
