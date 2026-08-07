@@ -20,37 +20,46 @@
     color: #ffffff;
     font-family: 'Caveat', cursive;
     min-height: 100vh;
-    padding: 2rem;
+    padding: 2.5rem;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
   }
 
-  /* Top-left header styling */
+  /* Top-left header & subtext container */
   header {
     margin-bottom: 2rem;
   }
 
   h1 {
-    font-size: clamp(2rem, 5vw, 3rem);
+    font-size: clamp(2.2rem, 5vw, 3.2rem);
     font-weight: 700;
     letter-spacing: 0.05em;
+    line-height: 1.1;
   }
 
-  /* Centered container for the artwork */
+  .subtext {
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    opacity: 0.9;
+    margin-top: 0.25rem;
+  }
+
+  /* Left-aligned, compact artwork container */
   .artwork-container {
     width: 100%;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-start;
+    align-items: flex-start;
   }
 
+  /* Drop shadow that conforms to transparent PNG contours */
   .artwork-container img {
-    max-width: 90vw;
-    max-height: 75vh;
+    max-width: 380px;
+    max-height: 45vh;
+    width: auto;
+    height: auto;
     object-fit: contain;
-    border-radius: 8px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    filter: drop-shadow(0px 12px 18px rgba(0, 0, 0, 0.35));
   }
 </style>
 </head>
@@ -58,8 +67,8 @@
 
   <header>
     <h1>My Artworks</h1>
+    <p class="subtext">I make my arts on paper and sometime on digital media</p>
   </header>
-  I make my arts on paper and sometime on digital media
 
   <main class="artwork-container">
     <img src="1.png" alt="My Artwork">
