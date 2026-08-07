@@ -107,6 +107,26 @@
     pointer-events: auto;
   }
 
+  /* Dynamic Event Banner Styling */
+  .event-banner {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--gold-accent);
+    background: rgba(245, 158, 11, 0.08);
+    border: 1px solid rgba(245, 158, 11, 0.25);
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    margin-bottom: 1.25rem;
+    display: inline-block;
+    align-self: flex-start;
+    transition: all 0.3s ease;
+  }
+
+  /* Hide banner completely when no event exists today */
+  .event-banner:empty {
+    display: none;
+  }
+
   /* Typewriter greeting styling */
   .greeting-box {
     font-family: var(--font-mono);
@@ -244,6 +264,9 @@
 
 <div class="wrap">
   <main>
+    <!-- Dynamic Event Banner -->
+    <div id="event-banner" class="event-banner"></div>
+
     <div class="greeting-box">
       <span id="typed-greeting"></span><span class="cursor"></span>
     </div>
@@ -289,11 +312,38 @@
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script>
-// Handles both initial loads AND restoring visibility on Back-button navigation
+// Checks events.json for today's special day
+async function checkSpecialDay() {
+  try {
+    const response = await fetch('events.json');
+    if (!response.ok) return;
+    
+    const events = await response.json();
+    
+    const today = new Date();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    const todayStr = `${month}-${day}`;
+
+    const match = events.find(event => event.date === todayStr);
+    const banner = document.getElementById('event-banner');
+
+    if (match && banner) {
+      banner.textContent = match.title;
+    } else if (banner) {
+      banner.textContent = "";
+    }
+  } catch (err) {
+    // Fail silently if events.json is not present
+  }
+}
+
+// Handles both initial loads AND restoring visibility/checking events on Back-button navigation
 window.addEventListener('pageshow', (event) => {
     document.body.style.opacity = '1';
     document.body.classList.add('page-loaded');
     startGreetingTypewriter();
+    checkSpecialDay();
 });
 
 // Intercept local link clicks for a smooth fade exit
