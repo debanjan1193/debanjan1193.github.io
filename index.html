@@ -34,12 +34,17 @@
   body {
     background-color: var(--bg-color);
     width: 100dvw;
-    height: 200dvh;
+    height: 100dvh;
     overflow: hidden;
     color: var(--text-color);
     font-family: var(--font-sans);
     line-height: 1.6;
-    transition: background-color 0.4s ease, color 0.4s ease;
+    opacity: 0;
+    transition: opacity 0.4s ease-in-out, background-color 0.4s ease, color 0.4s ease;
+  }
+
+  body.page-loaded {
+    opacity: 1;
   }
 
   #fluid {
@@ -252,13 +257,12 @@
       </p>
 
       <nav class="side-nav">
-        <a href="education.html"> Education</a>
-        <a href="publications.html"> Publications</a>
-        <a href="research.html"> Research</a>      
-        <a href="memberships.html"> Memberships</a>
-        <a href= "construction.html"> My Artworks </a>
-        <a href= "construction.html"> My Maps </a>
-        
+        <a href="education.html">/education</a>
+        <a href="publications.html">/publications</a>
+        <a href="research.html">/research</a>
+        <a href="memberships.html">/memberships</a>
+        <a href="construction.html">/my-artworks</a>
+        <a href="construction.html">/my-maps</a>
       </nav>
     </div>
 
@@ -285,6 +289,24 @@
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script>
+// Smooth Page Load and Link Exit Transitions
+window.addEventListener('DOMContentLoaded', () => {
+    document.body.classList.add('page-loaded');
+
+    // Smooth page exit when clicking internal links
+    const localLinks = document.querySelectorAll('a[href]:not([target="_blank"]):not([href^="#"])');
+    localLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const destination = link.href;
+            document.body.style.opacity = '0';
+            setTimeout(() => {
+                window.location.href = destination;
+            }, 300);
+        });
+    });
+});
+
 // Day/Night Toggle Handler
 document.getElementById('themeToggle').addEventListener('click', () => {
     document.body.classList.toggle('light-theme');
