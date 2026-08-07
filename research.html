@@ -82,5 +82,37 @@
 
 <script src="leaves.js"></script>
 
+  <script>
+  // Force reload on mobile back button cache restore
+  window.addEventListener('pageshow', (event) => {
+    if (event.persisted) {
+      window.location.reload();
+    }
+  });
+
+  // Typewriter effect for "UNDER CONSTRUCTION"
+  const titleText = "UNDER CONSTRUCTION";
+  const typedEl = document.getElementById('typed-text');
+  let charIndex = 0;
+
+  function typeTitle() {
+    if (charIndex < titleText.length) {
+      typedEl.textContent += titleText.charAt(charIndex);
+      charIndex++;
+      setTimeout(typeTitle, 100);
+    }
+  }
+
+  // Animated Dots Effect
+  const dotsEl = document.getElementById('dots');
+  let count = 1;
+  setInterval(() => {
+    count = (count % 3) + 1;
+    dotsEl.textContent = '.'.repeat(count);
+  }, 500);
+
+  window.addEventListener('load', typeTitle);
+</script>
+
 </body>
 </html>
