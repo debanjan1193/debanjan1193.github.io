@@ -6,338 +6,29 @@
 <title>Debanjan Sarkar, Ph.D. — Ecological Modeling &amp; Resilience Research</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --ink:#1E2E27;
-    --paper:#E9EDE3;
-    --paper-alt:#DEE4D4;
-    --teal:#2E6B62;
-    --clay:#A65C36;
-    --gold:#B4922C;
-    --muted:#5C6B60;
-    --line: rgba(30,46,39,0.16);
-    --max-w: 780px;
-  }
-  *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-  body{
-    margin:0;
-    background:var(--paper);
-    color:var(--ink);
-    font-family:'IBM Plex Sans', sans-serif;
-    line-height:1.6;
-    -webkit-font-smoothing:antialiased;
-  }
-  ::selection{ background:var(--gold); color:var(--ink); }
-
-  a{ color:var(--teal); text-decoration-color: rgba(46,107,98,0.4); text-underline-offset:3px; }
-  a:hover{ color:var(--clay); }
-
-  .wrap{
-    max-width:var(--max-w);
-    margin:0 auto;
-    padding:0 28px;
-  }
-
-  /* ---------- background contour texture ---------- */
-  .contours{
-    position:fixed;
-    inset:0;
-    z-index:-1;
-    opacity:0.5;
-    pointer-events:none;
-  }
-
-  /* ---------- coordinate stamp ---------- */
-  .stamp{
-    position:fixed;
-    top:24px;
-    right:28px;
-    font-family:'IBM Plex Mono', monospace;
-    font-size:11px;
-    letter-spacing:0.03em;
-    color:var(--muted);
-    text-align:right;
-    line-height:1.5;
-    z-index:5;
-  }
-  @media (max-width:640px){ .stamp{ display:none; } }
-
-  /* ---------- hero ---------- */
-  header.hero{
-    padding:120px 0 80px;
-  }
-  .eyebrow{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:12px;
-    letter-spacing:0.12em;
-    text-transform:uppercase;
-    color:var(--teal);
-    margin:0 0 18px;
-  }
-  h1{
-    font-family:'Fraunces', serif;
-    font-optical-sizing:auto;
-    font-weight:500;
-    font-size:clamp(38px, 5.6vw, 60px);
-    line-height:1.05;
-    letter-spacing:-0.01em;
-    margin:0 0 22px;
-    color:var(--ink);
-  }
-  h1 .role{
-    display:block;
-    font-size:0.36em;
-    font-weight:400;
-    font-style:italic;
-    color:var(--muted);
-    margin-top:14px;
-    letter-spacing:0;
-  }
-  .thesis{
-    font-size:19px;
-    max-width:54ch;
-    color:#3A473F;
-    margin:0 0 34px;
-  }
-  .hero-links{
-    display:flex;
-    gap:22px;
-    flex-wrap:wrap;
-    font-family:'IBM Plex Mono', monospace;
-    font-size:13px;
-  }
-  .hero-links a{ white-space:nowrap; }
-
-  /* ---------- contour divider ---------- */
-  .divider{
-    max-width:var(--max-w);
-    margin:0 auto;
-    padding:0 28px;
-  }
-  .divider svg{ width:100%; height:auto; display:block; }
-
-  /* ---------- section shell ---------- */
-  section{ padding:60px 0; }
-  .section-head{
-    display:flex;
-    align-items:baseline;
-    justify-content:space-between;
-    margin-bottom:36px;
-    border-bottom:1px solid var(--line);
-    padding-bottom:14px;
-  }
-  .section-head h2{
-    font-family:'Fraunces', serif;
-    font-weight:500;
-    font-size:27px;
-    margin:0;
-  }
-  .section-head .tag{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:11px;
-    color:var(--muted);
-    letter-spacing:0.04em;
-    white-space:nowrap;
-    padding-left:16px;
-  }
-
-  /* ---------- research cards ---------- */
-  .research-grid{
-    display:grid;
-    gap:2px;
-    background:var(--line);
-    border:1px solid var(--line);
-  }
-  .rcard{
-    background:var(--paper);
-    padding:26px 26px;
-    position:relative;
-  }
-  .rcard .coord{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:10.5px;
-    color:var(--muted);
-    letter-spacing:0.04em;
-  }
-  .rcard h3{
-    font-family:'Fraunces', serif;
-    font-weight:500;
-    font-size:20px;
-    margin:10px 0 10px;
-  }
-  .rcard p{ margin:0; color:#3A473F; font-size:15px; }
-  .rcard .species{
-    font-style:italic;
-    color:var(--clay);
-  }
-
-  /* ---------- timeline (education / experience) ---------- */
-  .timeline{ list-style:none; margin:0; padding:0; }
-  .timeline li{
-    display:grid;
-    grid-template-columns:150px 1fr;
-    gap:20px;
-    padding:18px 0;
-    border-bottom:1px solid var(--line);
-  }
-  .timeline li:first-child{ padding-top:0; }
-  .timeline li:last-child{ border-bottom:none; }
-  .timeline .when{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:12px;
-    color:var(--teal);
-    line-height:1.5;
-    padding-top:3px;
-  }
-  .timeline .when .place{ display:block; color:var(--muted); }
-  .timeline h4{
-    font-family:'Fraunces', serif;
-    font-weight:500;
-    font-size:16.5px;
-    margin:0 0 4px;
-  }
-  .timeline .org{
-    font-style:italic;
-    color:var(--clay);
-    font-size:14px;
-  }
-  .timeline p{ margin:4px 0 0; font-size:14px; color:var(--muted); }
-
-  @media (max-width:600px){
-    .timeline li{ grid-template-columns:1fr; gap:4px; }
-  }
-
-  /* ---------- publications ---------- */
-  .pub-list{ list-style:none; margin:0; padding:0; counter-reset:pub; }
-  .pub-list li{
-    counter-increment:pub;
-    display:grid;
-    grid-template-columns:34px 1fr;
-    gap:16px;
-    padding:16px 0;
-    border-bottom:1px solid var(--line);
-    font-size:14.5px;
-  }
-  .pub-list li:first-child{ padding-top:0; }
-  .pub-list li::before{
-    content: counter(pub);
-    font-family:'IBM Plex Mono', monospace;
-    font-size:12px;
-    color:var(--muted);
-    padding-top:2px;
-  }
-  .pub-list .authors{ color:var(--ink); }
-  .pub-list .authors .me{ font-weight:600; }
-  .pub-list .venue{ color:var(--muted); font-style:italic; }
-  .pub-list a{ font-family:'IBM Plex Mono', monospace; font-size:12px; }
-
-  /* ---------- memberships ---------- */
-  .mem-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:32px;
-  }
-  @media (max-width:600px){ .mem-grid{ grid-template-columns:1fr; } }
-  .mem-grid h4{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:11px;
-    text-transform:uppercase;
-    letter-spacing:0.06em;
-    color:var(--teal);
-    margin:0 0 12px;
-  }
-  .mem-grid ul{ margin:0; padding:0; list-style:none; }
-  .mem-grid li{
-    font-size:14px;
-    color:#3A473F;
-    padding:6px 0;
-    border-bottom:1px solid var(--line);
-  }
-  .mem-grid li:last-child{ border-bottom:none; }
-
-  /* ---------- about ---------- */
-  .about p{ font-size:16px; color:#3A473F; margin:0 0 16px; }
-  .about .skills{
-    display:flex;
-    flex-wrap:wrap;
-    gap:8px;
-    margin-top:20px;
-  }
-  .about .skill-tag{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:11.5px;
-    border:1px solid var(--line);
-    padding:5px 10px;
-    color:var(--muted);
-  }
-
-  /* ---------- contact / footer ---------- */
-  footer{
-    padding:60px 0 90px;
-  }
-  .contact-box{
-    border:1px solid var(--line);
-    padding:34px 30px;
-    background:var(--paper-alt);
-  }
-  .contact-box h2{
-    font-family:'Fraunces', serif;
-    font-weight:500;
-    font-size:24px;
-    margin:0 0 12px;
-  }
-  .contact-box p{ margin:0 0 20px; color:#3A473F; }
-  .contact-row{
-    display:flex;
-    gap:24px;
-    flex-wrap:wrap;
-    font-family:'IBM Plex Mono', monospace;
-    font-size:13.5px;
-  }
-  .foot-note{
-    margin-top:50px;
-    font-family:'IBM Plex Mono', monospace;
-    font-size:11px;
-    color:var(--muted);
-    text-align:center;
-  }
-
-  .edit-flag{
-    display:inline-block;
-    background:var(--gold);
-    color:var(--ink);
-    font-family:'IBM Plex Mono', monospace;
-    font-size:9.5px;
-    letter-spacing:0.05em;
-    padding:1px 6px;
-    margin-left:8px;
-    vertical-align:middle;
-    border-radius:2px;
-  }
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;800&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <svg class="contours" viewBox="0 0 1200 1600" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-  <g fill="none" stroke="#2E6B62" stroke-width="1">
-    <path d="M -50 200 Q 300 100 600 220 T 1250 180" opacity="0.15"/>
-    <path d="M -50 260 Q 320 160 600 280 T 1250 240" opacity="0.13"/>
-    <path d="M -50 320 Q 340 220 600 340 T 1250 300" opacity="0.11"/>
-    <path d="M -50 640 Q 280 520 620 650 T 1250 600" opacity="0.14"/>
-    <path d="M -50 700 Q 300 580 620 710 T 1250 660" opacity="0.12"/>
-    <path d="M -50 760 Q 320 640 620 770 T 1250 720" opacity="0.10"/>
-    <path d="M -50 1080 Q 260 980 640 1120 T 1250 1040" opacity="0.13"/>
-    <path d="M -50 1140 Q 280 1040 640 1180 T 1250 1100" opacity="0.11"/>
-    <path d="M -50 1400 Q 300 1300 620 1440 T 1250 1360" opacity="0.14"/>
+  <g fill="none" stroke="#211E1B" stroke-width="1">
+    <path d="M -50 200 Q 300 100 600 220 T 1250 180" opacity="0.10"/>
+    <path d="M -50 260 Q 320 160 600 280 T 1250 240" opacity="0.09"/>
+    <path d="M -50 320 Q 340 220 600 340 T 1250 300" opacity="0.07"/>
+    <path d="M -50 640 Q 280 520 620 650 T 1250 600" opacity="0.09"/>
+    <path d="M -50 700 Q 300 580 620 710 T 1250 660" opacity="0.08"/>
+    <path d="M -50 760 Q 320 640 620 770 T 1250 720" opacity="0.07"/>
+    <path d="M -50 1080 Q 260 980 640 1120 T 1250 1040" opacity="0.09"/>
+    <path d="M -50 1140 Q 280 1040 640 1180 T 1250 1100" opacity="0.07"/>
+    <path d="M -50 1400 Q 300 1300 620 1440 T 1250 1360" opacity="0.09"/>
   </g>
-  <g fill="#A65C36">
-    <circle cx="640" cy="230" r="2.5" opacity="0.5"/>
-    <circle cx="700" cy="255" r="2.5" opacity="0.4"/>
-    <circle cx="580" cy="660" r="2.5" opacity="0.5"/>
-    <circle cx="660" cy="700" r="2.5" opacity="0.4"/>
-    <circle cx="610" cy="1110" r="2.5" opacity="0.5"/>
+  <g fill="#AC3B2C">
+    <circle cx="640" cy="230" r="2.5" opacity="0.4"/>
+    <circle cx="700" cy="255" r="2.5" opacity="0.3"/>
+    <circle cx="580" cy="660" r="2.5" opacity="0.4"/>
+    <circle cx="660" cy="700" r="2.5" opacity="0.3"/>
+    <circle cx="610" cy="1110" r="2.5" opacity="0.4"/>
   </g>
 </svg>
 
@@ -348,7 +39,16 @@
 
 <div class="wrap">
   <header class="hero">
-    <p class="eyebrow">Field notes · Range maps · Resilience</p>
+    <div class="hanko" aria-hidden="true">
+      <svg width="46" height="46" viewBox="0 0 46 46" xmlns="http://www.w3.org/2000/svg">
+        <path d="M23 3.2c-11 0-19.8 8.9-19.8 19.8 0 10.9 8.8 19.8 19.8 19.8 10.9 0 19.8-8.9 19.8-19.8C42.8 12.1 33.9 3.2 23 3.2z"
+          fill="none" stroke="#AC3B2C" stroke-width="2.6" opacity="0.9"/>
+        <text x="23" y="20" text-anchor="middle" font-family="'Shippori Mincho', serif" font-size="12" fill="#AC3B2C" font-weight="600">D</text>
+        <text x="23" y="35" text-anchor="middle" font-family="'Shippori Mincho', serif" font-size="12" fill="#AC3B2C" font-weight="600">S</text>
+      </svg>
+    </div>
+    <span class="vertical-label">FIELD NOTES · RANGE MAPS · RESILIENCE</span>
+
     <h1>
       Debanjan Sarkar, Ph.D.
       <span class="role">Postdoctoral Fellow, University of Texas Rio Grande Valley</span>
@@ -360,8 +60,8 @@
       communities living in the path of change.
     </p>
     <div class="hero-links">
-      <a href="#research">Research →</a>
-      <a href="#publications">Publications →</a>
+      <a href="research.html">Research →</a>
+      <a href="publications.html">Publications →</a>
       <a href="cv.pdf">Download CV ↓</a>
       <a href="#contact">Contact →</a>
     </div>
@@ -369,8 +69,9 @@
 </div>
 
 <div class="divider">
-  <svg viewBox="0 0 780 20" xmlns="http://www.w3.org/2000/svg">
-    <path d="M0 10 Q 195 2 390 10 T 780 10" fill="none" stroke="#2E6B62" stroke-width="1" opacity="0.4"/>
+  <svg viewBox="0 0 46 46" xmlns="http://www.w3.org/2000/svg">
+    <path d="M23 4C12.5 5.5 5 13 5.8 22.5c0.8 9.5 9.5 17 20 16 10-1 17.6-9 17-18.5C42.2 11 34.5 3.6 24.5 4c-1.5 0.1-2 0.3-1.5 1"
+      fill="none" stroke="#AC3B2C" stroke-width="1.6" stroke-linecap="round" opacity="0.75"/>
   </svg>
 </div>
 
@@ -381,217 +82,42 @@
       <h2>About</h2>
       <span class="tag">01 — Overview</span>
     </div>
-    <p>
-      I'm a postdoctoral fellow working at the intersection of ecological modeling, species
-      distribution science, and community resilience education. My doctoral research examined
-      the impact of climate change on India's biodiversity and protected areas under different
-      SSP scenarios using geospatial technologies. I have 8+ years of experience across remote
-      sensing and GIS, climate change, landscape ecology, and nature-based solutions — and outside
-      the lab, I'm also a cartographer and mixed-media illustrator.
-    </p>
-    <p>
-      Current work at UTRGV spans locust and pollinator distribution modeling under future
-      climate scenarios, and a multi-year resilience education initiative for students and
-      community leaders in Hidalgo and Cameron counties.
-    </p>
-    <div class="skills">
-      <span class="skill-tag">R</span>
-      <span class="skill-tag">ArcGIS / ArcPy</span>
-      <span class="skill-tag">QGIS</span>
-      <span class="skill-tag">Google Earth Engine</span>
-      <span class="skill-tag">ERDAS</span>
-      <span class="skill-tag">MaxEnt</span>
-      <span class="skill-tag">biomod2</span>
-      <span class="skill-tag">Species Distribution Modeling</span>
-      <span class="skill-tag">Ecological Consulting</span>
-      <span class="skill-tag">Field Survey Design</span>
-    </div>
-  </section>
-
-  <section id="research">
-    <div class="section-head">
-      <h2>Research Areas</h2>
-      <span class="tag">02 — Current Work</span>
-    </div>
-    <div class="research-grid">
-      <div class="rcard">
-        <span class="coord">SDM · BIOMOD2 · HPC</span>
-        <h3>Locust Distribution Modeling</h3>
+    <div class="about-grid">
+      <div class="about-main">
         <p>
-          Species distribution modeling for <span class="species">Schistocerca piceifrons</span>
-          across the Rio Grande Valley, examining habitat overlap and hybridization zones under
-          shifting climate envelopes. Manuscript in preparation.
+          I'm a postdoctoral fellow working at the intersection of ecological modeling, species
+          distribution science, and community resilience education. My doctoral research examined
+          the impact of climate change on India's biodiversity and protected areas under different
+          SSP scenarios using geospatial technologies. I have 8+ years of experience across remote
+          sensing and GIS, climate change, landscape ecology, and nature-based solutions — and outside
+          the lab, I'm also a cartographer and mixed-media illustrator.
         </p>
-      </div>
-      <div class="rcard">
-        <span class="coord">25 SPECIES · SSP245 / SSP585</span>
-        <h3>Pollinator Range Modeling</h3>
         <p>
-          Multi-species distribution modeling for Lepidoptera, Hymenoptera, and Diptera pollinators
-          across Uttarakhand and Himachal Pradesh, projected against future climate scenarios using
-          topographic, land-cover, and bioclimatic predictors.
+          Current work at UTRGV spans locust and pollinator distribution modeling under future
+          climate scenarios, and a multi-year resilience education initiative for students and
+          community leaders in Hidalgo and Cameron counties.
         </p>
+        <div class="skills">
+          <span class="skill-tag">R</span>
+          <span class="skill-tag">ArcGIS / ArcPy</span>
+          <span class="skill-tag">QGIS</span>
+          <span class="skill-tag">Google Earth Engine</span>
+          <span class="skill-tag">ERDAS</span>
+          <span class="skill-tag">MaxEnt</span>
+          <span class="skill-tag">biomod2</span>
+          <span class="skill-tag">Species Distribution Modeling</span>
+          <span class="skill-tag">Ecological Consulting</span>
+          <span class="skill-tag">Field Survey Design</span>
+        </div>
       </div>
-      <div class="rcard">
-        <span class="coord">HIDALGO &amp; CAMERON CO. · 3-YR</span>
-        <h3>Place-Based Resilience Education</h3>
-        <p>
-          A community resilience education program running parallel Student Science and Community
-          Leadership tracks, built with public health and conservation partners across the Valley.
-        </p>
-      </div>
-    </div>
-  </section>
 
-  <section id="experience">
-    <div class="section-head">
-      <h2>Education &amp; Experience</h2>
-      <span class="tag">03 — Background</span>
-    </div>
-    <ul class="timeline">
-      <li>
-        <div class="when">2018 – 2024<span class="place">Dehradun, India</span></div>
-        <div>
-          <h4>PhD, Forestry (Environment Management)</h4>
-          <div class="org">Wildlife Institute of India · Registered from Forest Research Institute University</div>
-          <p>Thesis: "Resilience of Protected Areas of India to Climate Change: Current Status and Future Scenarios"</p>
-        </div>
-      </li>
-      <li>
-        <div class="when">Mar 2025 – Present<span class="place">Edinburg, TX</span></div>
-        <div>
-          <h4>Postdoctoral Fellow</h4>
-          <div class="org">University of Texas Rio Grande Valley</div>
-        </div>
-      </li>
-      <li>
-        <div class="when">2023 – 2025<span class="place">UK &amp; Ireland</span></div>
-        <div>
-          <h4>Project Consultant, Environmental Planning &amp; Ecology</h4>
-          <div class="org">Arcadis</div>
-        </div>
-      </li>
-      <li>
-        <div class="when">2018 – 2023<span class="place">Dehradun, India</span></div>
-        <div>
-          <h4>Senior Project Associate → Senior/Junior Research Fellow</h4>
-          <div class="org">Wildlife Institute of India</div>
-          <p>Integrated Development of Wildlife Habitat; linking protected area networks with near real-time avian locations (IBIN Project)</p>
-        </div>
-      </li>
-      <li>
-        <div class="when">2022<span class="place">Norwich, UK</span></div>
-        <div>
-          <h4>Newton-Bhabha PhD Placement Fellow</h4>
-          <div class="org">Tyndall Centre for Climate Change Research, University of East Anglia</div>
-        </div>
-      </li>
-      <li>
-        <div class="when">2014 – 2016<span class="place">Dehradun, India</span></div>
-        <div>
-          <h4>M.Sc., Environment Management (Natural Resource Management)</h4>
-          <div class="org">Forest Research Institute</div>
-        </div>
-      </li>
-      <li>
-        <div class="when">2011 – 2014<span class="place">Calcutta, India</span></div>
-        <div>
-          <h4>B.Sc. (Hons.), Zoology</h4>
-          <div class="org">Calcutta University</div>
-        </div>
-      </li>
-    </ul>
-  </section>
-
-  <section id="publications">
-    <div class="section-head">
-      <h2>Peer-Reviewed Publications</h2>
-      <span class="tag">04 — 14 Papers</span>
-    </div>
-    <ol class="pub-list">
-      <li><div>
-        <div class="authors">Bhattacharya, B., <span class="me">Sarkar, D.</span>, Zode, A., Talukdar, G. (2025). Climatic Niche Modelling to Assess the Impact of Climate Change on Nine Vulture Species of Asia.</div>
-        <div class="venue">Journal of Raptor Research 59(3): jrr2451</div>
-        <a href="https://doi.org/10.3356/jrr2451">doi:10.3356/jrr2451</a>
-      </div></li>
-      <li><div>
-        <div class="authors">Bhattacharya, B., <span class="me">Sarkar, D.</span>, Pandey, S., Mondal, I., Sathyakumar, S., Suresh Kumar, R., Talukdar, G. (2025). Identifying Corridors for Asiatic Black Bear (<em>Ursus thibetanus</em>) in a Part of Eastern Himalayas, India.</div>
-        <div class="venue">Frontiers in Conservation Science</div>
-        <a href="https://doi.org/10.3389/fcosc.2025.1470223">doi:10.3389/fcosc.2025.1470223</a>
-      </div></li>
-      <li><div>
-        <div class="authors">Manna, S., <span class="me">Sarkar, D.</span>, Talukdar, G. (2024). Identifying Climatic Niche Shift of the Endemic Avifauna of Western Ghats.</div>
-        <div class="venue">Journal Vol. 1(1), 52–61</div>
-      </div></li>
-      <li><div>
-        <div class="authors"><span class="me">Sarkar, D.</span>, Haritha, J., Debnath, A., Talukdar, G. (2024). A Systematic Review on the Potential Impact of Future Climate Change on India's Biodiversity Using Species Distribution Model (SDM) Studies: Trends and Data Gaps.</div>
-        <div class="venue">Biodiversity and Conservation</div>
-        <a href="https://doi.org/10.1007/s10531-024-02785-1">doi:10.1007/s10531-024-02785-1</a>
-      </div></li>
-      <li><div>
-        <div class="authors">Khan, S., <span class="me">Sarkar, D.</span>, Ganguly, S., Uniyal, V. P. (2023). Preliminary Assessment of Butterfly Diversity in Coal Block Area in Pakur District, Jharkhand, India.</div>
-        <div class="venue">Indian Forester 149(10), 1064–1067</div>
-        <a href="https://doi.org/10.36808/if/2023/v149i10/169439">doi:10.36808/if/2023/v149i10/169439</a>
-      </div></li>
-      <li><div>
-        <div class="authors"><span class="me">Sarkar, D.</span>, Tomar, B., Kumar, R. S., Saran, S., Talukdar, G. (2023). Influence of Seasonal Variables on the Distribution of Pied Cuckoo (<em>Clamator jacobinus</em>) in India.</div>
-        <div class="venue">Journal of the Indian Society of Remote Sensing</div>
-        <a href="https://doi.org/10.1007/s12524-023-01771-4">doi:10.1007/s12524-023-01771-4</a>
-      </div></li>
-      <li><div>
-        <div class="authors"><span class="me">Sarkar, D.</span>, Talukdar, G. (2023). Predicting the Impact of Future Climate Changes and Range-Shifts of Indian Hornbills (Family: Bucerotidae).</div>
-        <div class="venue">Ecological Informatics</div>
-        <a href="https://doi.org/10.1016/j.ecoinf.2023.101987">doi:10.1016/j.ecoinf.2023.101987</a>
-      </div></li>
-      <li><div>
-        <div class="authors">Biswas, S., Bhatt, P., <span class="me">Sarkar, D.</span>, Talukdar, G., Pandav, B., Mondol, S. (2022). Assessing Tiger Corridor Functionality with Landscape Genetics and Modelling Across Terai-Arc Landscape, India.</div>
-        <div class="venue">Conservation Genetics 23(5), 949–966</div>
-        <a href="https://doi.org/10.1007/s10592-022-01460-8">doi:10.1007/s10592-022-01460-8</a>
-      </div></li>
-      <li><div>
-        <div class="authors">Paul, S., <span class="me">Sarkar, D.</span>, Patil, A., Ghosh, T., Talukdar, G., Kumar, M., et al., Mondol, S. (2020). Assessment of Endemic Northern Swamp Deer (<em>Rucervus duvaucelii duvaucelii</em>) Distribution and Identification of Priority Conservation Areas Through Modelling and Field Surveys Across North India.</div>
-        <div class="venue">Global Ecology and Conservation, e01263</div>
-      </div></li>
-      <li><div>
-        <div class="authors">Seal, S., <span class="me">Sarkar, D.</span>, Das, A. K., Chowdhury, A. (2020). Notes on a Communal Roosting of Two Oakblues (Lepidoptera: Lycaenidae: <em>Arhopala</em>) and the Common Emigrant (Pieridae: <em>Catopsilia pomona</em>) Butterflies in Uttarakhand, India.</div>
-        <div class="venue">Journal of Threatened Taxa 12(13), 16920–16923</div>
-      </div></li>
-      <li><div>
-        <div class="authors"><span class="me">Sarkar, D.</span>, Mital, A., Mondal, R., Kumar, S. R., Talukdar, G. (2019). Community Ponds: A Tool for Conservation. A Case Study of <em>Nilssonia gangetica</em> (Cuvier, 1825) in Kashipur Village, Uttar Pradesh, India.</div>
-        <div class="venue">Herpetology Notes 12, 631–636</div>
-      </div></li>
-      <li><div>
-        <div class="authors"><span class="me">Sarkar, D.</span>, Ramesh, C., Hussain, S. A., Mondal, R., Talukdar, G. (2018). A Field Observation of the Critically Endangered Indian Gharial, <em>Gavialis gangeticus</em> (Gmelin 1789), in the Lower Ganga Canal, Narora, Uttar Pradesh, India.</div>
-        <div class="venue">IRCF Reptiles &amp; Amphibians 25(3), 204–207</div>
-      </div></li>
-      <li><div>
-        <div class="authors"><span class="me">Sarkar, D.</span>, Mondal, R. (2018). A Rapid Assessment of Butterfly Diversity Around Narora Atomic Power Plant Township.</div>
-        <div class="venue">NeBio 9(2), 219–222</div>
-      </div></li>
-    </ol>
-  </section>
-
-  <section id="memberships">
-    <div class="section-head">
-      <h2>Memberships</h2>
-      <span class="tag">05 — Affiliations</span>
-    </div>
-    <div class="mem-grid">
-      <div>
-        <h4>Life Member</h4>
-        <ul>
-          <li>Indian Society of Remote Sensing</li>
-          <li>Indian National Cartographic Association</li>
-          <li>Indian Science Congress Association</li>
-        </ul>
-      </div>
-      <div>
-        <h4>Regular Member</h4>
-        <ul>
-          <li>Ecological Society of America (2026–present)</li>
-          <li>International Society of Photogrammetry and Remote Sensing (2023–present)</li>
-          <li>IUCN Commission on Ecosystem Management (2023–present)</li>
-        </ul>
+      <div class="about-side">
+        <nav class="side-nav">
+          <a href="research.html">Research Areas <span class="arrow">→</span></a>
+          <a href="education.html">Education &amp; Experience <span class="arrow">→</span></a>
+          <a href="publications.html">Publications <span class="arrow">→</span></a>
+          <a href="memberships.html">Memberships <span class="arrow">→</span></a>
+        </nav>
       </div>
     </div>
   </section>
@@ -612,6 +138,8 @@
   </section>
 
 </div>
+
+<script src="leaves.js"></script>
 
 </body>
 </html>
