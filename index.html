@@ -289,11 +289,15 @@
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script>
-// Smooth Page Load and Link Exit Transitions
-window.addEventListener('DOMContentLoaded', () => {
+// Handles both initial loads AND restoring visibility on Back-button navigation
+window.addEventListener('pageshow', (event) => {
+    document.body.style.opacity = '1';
     document.body.classList.add('page-loaded');
+    startGreetingTypewriter();
+});
 
-    // Smooth page exit when clicking internal links
+// Intercept local link clicks for a smooth fade exit
+window.addEventListener('DOMContentLoaded', () => {
     const localLinks = document.querySelectorAll('a[href]:not([target="_blank"]):not([href^="#"])');
     localLinks.forEach(link => {
         link.addEventListener('click', (e) => {
@@ -312,7 +316,7 @@ document.getElementById('themeToggle').addEventListener('click', () => {
     document.body.classList.toggle('light-theme');
 });
 
-// Automatic randomized greeting typewriter effect on load
+// Typewriter greeting function with safe state reset
 const greetings = [
   "Hi there!",
   "Hello, visitor!",
@@ -322,20 +326,30 @@ const greetings = [
   "Glad you're here!"
 ];
 
-const selectedGreeting = greetings[Math.floor(Math.random() * greetings.length)];
-const greetingEl = document.getElementById('typed-greeting');
-let charIndex = 0;
+let greetingTimer = null;
 
-function typeGreeting() {
-  if (charIndex < selectedGreeting.length) {
-    greetingEl.textContent += selectedGreeting.charAt(charIndex);
-    charIndex++;
-    setTimeout(typeGreeting, 100);
-  }
+function startGreetingTypewriter() {
+    const greetingEl = document.getElementById('typed-greeting');
+    if (!greetingEl) return;
+
+    if (greetingTimer) clearTimeout(greetingTimer);
+    greetingEl.textContent = "";
+
+    const selectedGreeting = greetings[Math.floor(Math.random() * greetings.length)];
+    let charIndex = 0;
+
+    function typeGreeting() {
+      if (charIndex < selectedGreeting.length) {
+        greetingEl.textContent += selectedGreeting.charAt(charIndex);
+        charIndex++;
+        greetingTimer = setTimeout(typeGreeting, 100);
+      }
+    }
+
+    typeGreeting();
 }
 
 window.addEventListener('load', () => {
-    typeGreeting();
     initFluid();
 });
 
