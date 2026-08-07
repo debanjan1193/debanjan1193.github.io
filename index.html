@@ -13,7 +13,7 @@
     --bg-color: #000000;
     --text-color: #e6e6e6;
     --muted-color: #888888;
-    --pink-accent: #f472b6;
+    --gold-accent: #f59e0b;
     --font-serif: 'Instrument Serif', serif;
     --font-sans: 'Inter', sans-serif;
     --font-mono: 'IBM Plex Mono', monospace;
@@ -37,7 +37,6 @@
     left: 0;
     width: 100dvw;
     height: 100dvh;
-    z-index: 1;
   }
 
   .wrap {
@@ -74,8 +73,8 @@
     font-size: 1.15em;
   }
 
-  h1 em.pink {
-    color: var(--pink-accent);
+  h1 em.gold {
+    color: var(--gold-accent);
   }
 
   .thesis {
@@ -88,7 +87,7 @@
   }
 
   .thesis a {
-    color: var(--pink-accent);
+    color: var(--gold-accent);
     text-decoration: underline;
     text-underline-offset: 3px;
   }
@@ -145,7 +144,7 @@
   }
 
   .nav-links a:hover {
-    color: var(--pink-accent);
+    color: var(--gold-accent);
   }
 
   @media (max-width: 640px) {
@@ -161,7 +160,7 @@
 <div class="wrap">
   <main>
     <h1>
-      Welcome to <em class="pink">my personal portfolio</em> — or, as I like to call it, <em class="pink">my playground</em> on the web.
+      Welcome to <em class="gold">my personal portfolio</em> — or, as I like to call it, <em class="gold">my playground</em> on the web.
     </h1>
 
     <p class="thesis">
@@ -196,12 +195,16 @@
   </main>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script>
+// put the animation on load, otherwise it bugs out
 window.addEventListener('load', () => {
     initFluid();
 });
 
 const initFluid = () => {
+
+    // anim setup || in an active project you can set this to the html body. however ive found a bound box to the viewport looks + performs better
     const canvas = document.getElementById('fluid');
     resizeCanvas();
 
@@ -209,15 +212,15 @@ const initFluid = () => {
         SIM_RESOLUTION: 128,
         DYE_RESOLUTION: 1440,
         CAPTURE_RESOLUTION: 512,
-        DENSITY_DISSIPATION: 3.5,
-        VELOCITY_DISSIPATION: 2,
+        DENSITY_DISSIPATION: 2.2, // Lower value slows down dissipation
+        VELOCITY_DISSIPATION: 1.2, // Lower value gives smoother momentum
         PRESSURE: 0.1,
         PRESSURE_ITERATIONS: 20,
-        CURL: 10,
-        SPLAT_RADIUS: 0.5,
-        SPLAT_FORCE: 6000,
+        CURL: 8,                  // Slightly gentler vorticity
+        SPLAT_RADIUS: 0.45,
+        SPLAT_FORCE: 3500,        // Reduced force for a smoother feel
         SHADING: true,
-        COLOR_UPDATE_SPEED: 10,
+        COLOR_UPDATE_SPEED: 3,    // Reduced color update rate
         PAUSED: false,
         BACK_COLOR: { r: 0, g: 0, b: 0 },
         TRANSPARENT: true,
@@ -406,7 +409,8 @@ const initFluid = () => {
             console.trace(gl.getShaderInfoLog(shader));
 
         return shader;
-    }
+
+    };
 
     function addKeywords(source, keywords) {
         if (keywords == null) return source;
@@ -1078,14 +1082,33 @@ const initFluid = () => {
         clickSplat(pointer);
     });
 
+    $('body').one('mousemove', e => {
+        let pointer = pointers[0];
+        let posX = scaleByPixelRatio(e.clientX);
+        let posY = scaleByPixelRatio(e.clientY);
+        let color = generateColor();
+        update();
+        updatePointerMoveData(pointer, posX, posY, color);
+    });
+
     window.addEventListener('mousemove', e => {
         let pointer = pointers[0];
         let posX = scaleByPixelRatio(e.clientX);
         let posY = scaleByPixelRatio(e.clientY);
-        if (!pointer.down && pointers.length === 1) {
-            updatePointerDownData(pointer, -1, posX, posY);
+        let color = pointer.color;
+        updatePointerMoveData(pointer, posX, posY, color);
+    });
+
+    $('body').one('touchstart', e => {
+        const touches = e.targetTouches;
+        let touch = touches[0]
+        let pointer = pointers[0];
+        for (let i = 0; i < touches.length; i++) {
+            let posX = scaleByPixelRatio(touches[i].clientX);
+            let posY = scaleByPixelRatio(touches[i].clientY);
+            update();
+            updatePointerDownData(pointer, touches[i].identifier, posX, posY);
         }
-        updatePointerMoveData(pointer, posX, posY, pointer.color);
     });
 
     window.addEventListener('touchstart', e => {
@@ -1111,6 +1134,7 @@ const initFluid = () => {
     window.addEventListener('touchend', e => {
         const touches = e.changedTouches;
         let pointer = pointers[0];
+
         for (let i = 0; i < touches.length; i++) {
             updatePointerUpData(pointer);
         }
@@ -1156,13 +1180,13 @@ const initFluid = () => {
         return delta;
     }
 
-    // Deep Magenta / Purple smoke hue matching the reference video
+    // Golden Amber smoke hue generation
     function generateColor () {
-        let h = Math.random() * 0.12 + 0.80; // Magenta-Purple range
-        let c = HSVtoRGB(h, 0.9, 0.8);
-        c.r *= 0.18;
-        c.g *= 0.05;
-        c.b *= 0.22;
+        let h = Math.random() * 0.08 + 0.08; // Warm Golden Amber Range
+        let c = HSVtoRGB(h, 0.95, 0.85);
+        c.r *= 0.28;
+        c.g *= 0.16;
+        c.b *= 0.02;
         return c;
     }
 
@@ -1220,8 +1244,6 @@ const initFluid = () => {
         }
         return hash;
     };
-
-    update();
 };
 </script>
 
