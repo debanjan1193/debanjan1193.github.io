@@ -3,279 +3,285 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Debanjan Sarkar, Ph.D. — Ecological Modeling &amp; Resilience Research</title>
+<title>Debanjan Sarkar, Ph.D. — Personal Portfolio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;800&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
   :root {
-    --bg-color: #fcfbf9;
-    --text-color: #211e1b;
-    --accent-color: #ac3b2c;
-    --border-color: #e5e2dd;
-    --muted-color: #6e6a66;
-    --font-serif: 'Shippori Mincho', serif;
-    --font-sans: 'Zen Kaku Gothic New', sans-serif;
+    --bg-color: #080808;
+    --text-color: #e6e6e6;
+    --muted-color: #a0a0a0;
+    --pink-accent: #f472b6;
+    --border-color: #222222;
+    --font-serif: 'Instrument Serif', serif;
+    --font-sans: 'Inter', sans-serif;
     --font-mono: 'IBM Plex Mono', monospace;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  
+
   html, body {
-    height: 100vh;
+    height: 100%;
+    width: 100%;
     overflow: hidden;
     background-color: var(--bg-color);
     color: var(--text-color);
     font-family: var(--font-sans);
-    line-height: 1.5;
+    line-height: 1.6;
   }
 
-  .contours {
+  #canvas {
     position: fixed;
-    top: 0; left: 0;
-    width: 100vw; height: 100vh;
-    z-index: -1;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
     pointer-events: none;
   }
 
   .wrap {
-    max-width: 920px;
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
     height: 100vh;
     margin: 0 auto;
-    padding: 1.5rem;
+    padding: 3rem 2rem;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-  }
-
-  /* Header Section */
-  .header-top {
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    margin-bottom: 0.5rem;
-  }
-
-  .stamp {
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    color: var(--muted-color);
-    text-align: left;
-    line-height: 1.3;
+    justify-content: center;
   }
 
   h1 {
-    font-family: var(--font-serif);
-    font-size: 2.3rem;
-    font-weight: 600;
-    line-height: 1.15;
-    margin-bottom: 1rem;
-    text-align: left;
-  }
-
-  h1 .role {
-    display: block;
     font-family: var(--font-sans);
-    font-size: 1.05rem;
+    font-size: clamp(2rem, 4vw, 3.2rem);
     font-weight: 400;
-    color: var(--muted-color);
-    margin-top: 0.25rem;
-    text-align: left;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+    margin-bottom: 1.5rem;
+    max-width: 820px;
   }
 
-  /* Main Bio Grid */
-  .bio-grid {
-    display: grid;
-    grid-template-columns: 1.8fr 1fr;
-    gap: 1.75rem;
-    align-items: start;
-    margin-bottom: 1.25rem;
+  h1 em {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 1.15em;
+  }
+
+  h1 em.pink {
+    color: var(--pink-accent);
   }
 
   .thesis {
     font-size: 1.05rem;
-    color: #2b2825;
-    line-height: 1.6;
-    text-align: left;
-    padding-right: 0.5rem;
+    color: var(--muted-color);
+    max-width: 760px;
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+    line-height: 1.7;
   }
 
-  .side-nav {
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-    padding-left: 1.5rem;
-    border-left: 1px solid var(--border-color);
+  .thesis a {
+    color: var(--pink-accent);
+    text-decoration: underline;
+    text-underline-offset: 3px;
   }
 
-  .side-nav a {
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    color: var(--text-color);
-    text-decoration: none;
+  .meta-label {
+    font-size: 0.85rem;
+    color: var(--muted-color);
+    margin-bottom: 1rem;
+  }
+
+  .bottom-bar {
     display: flex;
-    justify-content: space-between;
+    flex-wrap: wrap;
     align-items: center;
-    padding: 0.3rem 0;
+    gap: 2rem;
+  }
+
+  .social-links {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+  }
+
+  .social-links a {
+    color: var(--muted-color);
+    text-decoration: none;
+    transition: color 0.2s ease;
+    display: flex;
+    align-items: center;
+  }
+
+  .social-links a:hover {
+    color: var(--text-color);
+  }
+
+  .social-links svg {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+  }
+
+  .nav-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+
+  .nav-links a {
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    color: var(--muted-color);
+    text-decoration: none;
     transition: color 0.2s ease;
   }
 
-  .side-nav a:hover {
-    color: var(--accent-color);
+  .nav-links a:hover {
+    color: var(--pink-accent);
   }
 
-  /* Compact Expertise */
-  main {
-    margin-top: 0;
-  }
-
-  .section-title {
-    font-family: var(--font-serif);
-    font-size: 1.05rem;
-    margin-bottom: 0.5rem;
-    color: var(--accent-color);
-    text-align: left;
-  }
-
-  .skills {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-  }
-
-  .skill-tag {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    padding: 0.25rem 0.55rem;
-    background: rgba(33, 30, 27, 0.04);
-    border: 1px solid var(--border-color);
-    border-radius: 2px;
-  }
-
-  /* Compact Footer */
-  .contact-box {
-    border-top: 1px solid var(--text-color);
-    padding-top: 0.75rem;
-    margin-top: 1rem;
-  }
-
-  .contact-row {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    gap: 1rem;
-  }
-
-  .contact-links {
-    display: flex;
-    gap: 1.25rem;
-  }
-
-  .contact-row a {
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    color: var(--accent-color);
-    text-decoration: none;
-  }
-
-  .foot-note {
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    color: var(--muted-color);
-  }
-
-  @media (max-height: 700px), (max-width: 768px) {
-    html, body { height: auto; overflow: auto; }
-    .wrap { height: auto; padding: 1rem; }
-    .bio-grid { grid-template-columns: 1fr; gap: 1rem; }
-    .side-nav { padding-left: 0; border-left: none; }
+  @media (max-width: 640px) {
+    .wrap { padding: 1.5rem; }
+    .bottom-bar { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
   }
 </style>
 </head>
 <body>
 
-<svg class="contours" viewBox="0 0 1200 1600" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-  <g fill="none" stroke="#211E1B" stroke-width="1">
-    <path d="M -50 200 Q 300 100 600 220 T 1250 180" opacity="0.10"/>
-    <path d="M -50 260 Q 320 160 600 280 T 1250 240" opacity="0.09"/>
-    <path d="M -50 320 Q 340 220 600 340 T 1250 300" opacity="0.07"/>
-    <path d="M -50 640 Q 280 520 620 650 T 1250 600" opacity="0.09"/>
-    <path d="M -50 700 Q 300 580 620 710 T 1250 660" opacity="0.08"/>
-  </g>
-  <g fill="#AC3B2C">
-    <circle cx="640" cy="230" r="2.5" opacity="0.4"/>
-    <circle cx="700" cy="255" r="2.5" opacity="0.3"/>
-    <circle cx="580" cy="660" r="2.5" opacity="0.4"/>
-  </g>
-</svg>
+<canvas id="canvas"></canvas>
 
 <div class="wrap">
-  <header>
-    <div class="header-top">
-      <div class="stamp">
-        26.3017° N, 98.1633° W<br>
-        Edinburg, TX — Rio Grande Valley
-      </div>
-    </div>
-
+  <main>
     <h1>
-      Debanjan Sarkar, Ph.D.
-      <span class="role">Postdoctoral Fellow, University of Texas Rio Grande Valley</span>
+      Welcome to <em class="pink">my personal portfolio</em> — or, as I like to call it, <em class="pink">my playground</em> on the web.
     </h1>
 
-    <div class="bio-grid">
-      <p class="thesis">
-        I'm a postdoctoral fellow working at the intersection of ecological modeling, species
-        distribution science, and community resilience education. My doctoral research examined
-        the impact of climate change on India's biodiversity and protected areas under different
-        SSP scenarios using geospatial technologies. I have 8+ years of experience across remote
-        sensing, GIS, landscape ecology, and nature-based solutions — and outside
-        the lab, I'm also a cartographer and mixed-media illustrator.
-      </p>
+    <p class="thesis">
+      I'm <strong>Debanjan Sarkar, Ph.D.</strong> — a Postdoctoral Fellow at the <a href="https://www.utrgv.edu" target="_blank" rel="noopener">University of Texas Rio Grande Valley</a> working at the intersection of ecological modeling, species distribution science, and community resilience education. Outside the lab, I'm a cartographer and mixed-media illustrator.
+    </p>
 
-      <nav class="side-nav">
-        <a href="research.html">Research Areas <span>→</span></a>
-        <a href="education.html">Education &amp; Experience <span>→</span></a>
-        <a href="publications.html">Publications <span>→</span></a>
-        <a href="memberships.html">Memberships <span>→</span></a>
+    <div class="meta-label">More about me:</div>
+
+    <div class="bottom-bar">
+      <div class="social-links">
+        <a href="mailto:debanjan.sarkar@utrgv.edu" title="Email" aria-label="Email">
+          <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+        </a>
+        <a href="https://linkedin.com/in/deb1193" target="_blank" rel="noopener" title="LinkedIn" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+        </a>
+        <a href="https://github.com/debanjan1193" target="_blank" rel="noopener" title="GitHub" aria-label="GitHub">
+          <svg viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/></svg>
+        </a>
+        <a href="https://www.researchgate.net/profile/Debanjan-Sarkar" target="_blank" rel="noopener" title="ResearchGate" aria-label="ResearchGate">
+          <svg viewBox="0 0 24 24"><path d="M19.54 6.64A10.02 10.02 0 0 0 12 3a10.02 10.02 0 0 0-7.54 3.64A9.92 9.92 0 0 0 2.5 13a9.92 9.92 0 0 0 1.96 6.36A10.02 10.02 0 0 0 12 23a10.02 10.02 0 0 0 7.54-3.64A9.92 9.92 0 0 0 21.5 13a9.92 9.92 0 0 0-1.96-6.36zM12 21a8.03 8.03 0 0 1-6.03-2.71A7.9 7.9 0 0 1 4.5 13c0-1.96.72-3.79 1.97-5.29A8.03 8.03 0 0 1 12 5c2.22 0 4.25.88 5.75 2.35A7.9 7.9 0 0 1 19.5 13c0 1.96-.72 3.79-1.97 5.29A8.03 8.03 0 0 1 12 21zm-1.5-12h3a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2h-1.5v3H10.5V9zm2 3.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1v2z"/></svg>
+        </a>
+      </div>
+
+      <nav class="nav-links">
+        <a href="research.html">/research</a>
+        <a href="publications.html">/publications</a>
+        <a href="education.html">/education</a>
+        <a href="memberships.html">/memberships</a>
       </nav>
     </div>
-  </header>
-
-  <main>
-    <h2 class="section-title">Technical Expertise</h2>
-    <div class="skills">
-      <span class="skill-tag">R</span>
-      <span class="skill-tag">ArcGIS / ArcPy</span>
-      <span class="skill-tag">QGIS</span>
-      <span class="skill-tag">Google Earth Engine</span>
-      <span class="skill-tag">ERDAS</span>
-      <span class="skill-tag">MaxEnt</span>
-      <span class="skill-tag">biomod2</span>
-      <span class="skill-tag">Species Distribution Modeling</span>
-      <span class="skill-tag">Ecological Consulting</span>
-      <span class="skill-tag">Field Survey Design</span>
-    </div>
   </main>
-
-  <footer id="contact">
-    <div class="contact-box">
-      <div class="contact-row">
-        <div class="contact-links">
-          <a href="mailto:debanjan.sarkar@utrgv.edu">debanjan.sarkar@utrgv.edu</a>
-          <a href="https://github.com/debanjan1193" target="_blank" rel="noopener">GitHub ↗</a>
-          <a href="https://linkedin.com/in/deb1193" target="_blank" rel="noopener">LinkedIn ↗</a>
-          <a href="https://www.researchgate.net/profile/Debanjan-Sarkar" target="_blank" rel="noopener">ResearchGate ↗</a>
-        </div>
-        <span class="foot-note">Updated 2026</span>
-      </div>
-    </div>
-  </footer>
 </div>
 
-<script src="leaves.js"></script>
+<!-- Fluid / Smoke Simulation Effect Canvas -->
+<script>
+  const canvas = document.getElementById('canvas');
+  const ctx = canvas.getContext('2d');
+
+  let width, height;
+  let particles = [];
+  const mouse = { x: -1000, y: -1000, vx: 0, vy: 0, lastX: -1000, lastY: -1000 };
+
+  function resize() {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  window.addEventListener('mousemove', (e) => {
+    if (mouse.lastX === -1000) {
+      mouse.lastX = e.clientX;
+      mouse.lastY = e.clientY;
+    }
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+    mouse.vx = (mouse.x - mouse.lastX) * 0.5;
+    mouse.vy = (mouse.y - mouse.lastY) * 0.5;
+    mouse.lastX = mouse.x;
+    mouse.lastY = mouse.y;
+
+    // Spawn smoke particles along mouse path
+    const speed = Math.hypot(mouse.vx, mouse.vy);
+    const count = Math.min(Math.floor(speed * 1.5) + 2, 12);
+    for (let i = 0; i < count; i++) {
+      particles.push(new Particle(mouse.x, mouse.y, mouse.vx, mouse.vy));
+    }
+  });
+
+  class Particle {
+    constructor(x, y, vx, vy) {
+      this.x = x + (Math.random() - 0.5) * 20;
+      this.y = y + (Math.random() - 0.5) * 20;
+      this.vx = vx * 0.2 + (Math.random() - 0.5) * 1.5;
+      this.vy = vy * 0.2 + (Math.random() - 0.5) * 1.5 - 0.5;
+      this.radius = Math.random() * 60 + 40;
+      this.maxLife = Math.random() * 60 + 60;
+      this.life = this.maxLife;
+
+      // Color palette shifting from magenta/pink to dark purple smoke
+      const hue = Math.random() * 40 + 300;
+      const sat = Math.random() * 30 + 70;
+      const light = Math.random() * 20 + 40;
+      this.color = `hsla(${hue}, ${sat}%, ${light}%,`;
+    }
+
+    update() {
+      this.x += this.vx;
+      this.y += this.vy;
+      this.vx *= 0.96;
+      this.vy *= 0.96;
+      this.radius += 0.8;
+      this.life--;
+    }
+
+    draw() {
+      const alpha = Math.max(0, (this.life / this.maxLife) * 0.22);
+      const gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.radius);
+      gradient.addColorStop(0, this.color + alpha + ')');
+      gradient.addColorStop(0.5, this.color + (alpha * 0.4) + ')');
+      gradient.addColorStop(1, 'transparent');
+
+      ctx.fillStyle = gradient;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, width, height);
+    for (let i = particles.length - 1; i >= 0; i--) {
+      particles[i].update();
+      particles[i].draw();
+      if (particles[i].life <= 0) {
+        particles.splice(i, 1);
+      }
+    }
+    requestAnimationFrame(animate);
+  }
+  animate();
+</script>
 
 </body>
 </html>
