@@ -3,105 +3,311 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Education &amp; Experience — Debanjan Sarkar, Ph.D.</title>
+<title>Debanjan Sarkar, Ph.D. — Ecological Modeling &amp; Resilience Research</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;800&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg-color: #fcfbf9;
+    --text-color: #211e1b;
+    --accent-color: #ac3b2c;
+    --border-color: #e5e2dd;
+    --muted-color: #6e6a66;
+    --font-serif: 'Shippori Mincho', serif;
+    --font-sans: 'Zen Kaku Gothic New', sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-sans);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  .contours {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  .stamp {
+    position: absolute;
+    top: 2rem; right: 2rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--muted-color);
+    text-align: right;
+    letter-spacing: 0.05em;
+  }
+
+  .wrap {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+  }
+
+  header.hero {
+    position: relative;
+    padding-top: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .hanko-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .vertical-label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    color: var(--accent-color);
+    text-transform: uppercase;
+  }
+
+  h1 {
+    font-family: var(--font-serif);
+    font-size: 2.8rem;
+    font-weight: 600;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+
+  h1 .role {
+    display: block;
+    font-family: var(--font-sans);
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: var(--muted-color);
+    margin-top: 0.5rem;
+  }
+
+  .bio-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 3rem;
+    align-items: start;
+    margin-top: 2rem;
+  }
+
+  .thesis {
+    font-size: 1.05rem;
+    color: #383430;
+  }
+
+  .divider {
+    display: flex;
+    justify-content: center;
+    margin: 3rem 0;
+  }
+
+  .divider svg { width: 32px; height: 32px; }
+
+  @media (max-width: 768px) {
+    .bio-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .stamp { position: relative; top: 0; right: 0; text-align: left; margin-bottom: 2rem; }
+  }
+
+  .section-title {
+    font-family: var(--font-serif);
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    color: var(--accent-color);
+  }
+
+  .skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .skill-tag {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    padding: 0.35rem 0.75rem;
+    background: rgba(33, 30, 27, 0.04);
+    border: 1px solid var(--border-color);
+    border-radius: 2px;
+  }
+
+  .side-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    background: rgba(33, 30, 27, 0.02);
+    padding: 1.25rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+  }
+
+  .side-nav a {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--text-color);
+    text-decoration: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.4rem 0;
+    border-bottom: 1px dashed var(--border-color);
+    transition: all 0.2s ease;
+  }
+
+  .side-nav a:last-child {
+    border-bottom: none;
+  }
+
+  .side-nav a:hover {
+    color: var(--accent-color);
+  }
+
+  .contact-box {
+    border-top: 1px solid var(--text-color);
+    padding-top: 2.5rem;
+    margin-top: 2rem;
+  }
+
+  .contact-box h2 {
+    font-family: var(--font-serif);
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .contact-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .contact-row a {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--accent-color);
+    text-decoration: none;
+  }
+
+  .foot-note {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--muted-color);
+    margin-top: 3rem;
+  }
+</style>
 </head>
 <body>
 
 <svg class="contours" viewBox="0 0 1200 1600" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-  <g fill="none" stroke="#2E6B62" stroke-width="1">
-    <path d="M -50 200 Q 300 100 600 220 T 1250 180" opacity="0.15"/>
-    <path d="M -50 260 Q 320 160 600 280 T 1250 240" opacity="0.13"/>
-    <path d="M -50 320 Q 340 220 600 340 T 1250 300" opacity="0.11"/>
-    <path d="M -50 640 Q 280 520 620 650 T 1250 600" opacity="0.14"/>
-    <path d="M -50 700 Q 300 580 620 710 T 1250 660" opacity="0.12"/>
-    <path d="M -50 760 Q 320 640 620 770 T 1250 720" opacity="0.10"/>
-    <path d="M -50 1080 Q 260 980 640 1120 T 1250 1040" opacity="0.13"/>
-    <path d="M -50 1140 Q 280 1040 640 1180 T 1250 1100" opacity="0.11"/>
-    <path d="M -50 1400 Q 300 1300 620 1440 T 1250 1360" opacity="0.14"/>
+  <g fill="none" stroke="#211E1B" stroke-width="1">
+    <path d="M -50 200 Q 300 100 600 220 T 1250 180" opacity="0.10"/>
+    <path d="M -50 260 Q 320 160 600 280 T 1250 240" opacity="0.09"/>
+    <path d="M -50 320 Q 340 220 600 340 T 1250 300" opacity="0.07"/>
+    <path d="M -50 640 Q 280 520 620 650 T 1250 600" opacity="0.09"/>
+    <path d="M -50 700 Q 300 580 620 710 T 1250 660" opacity="0.08"/>
+    <path d="M -50 760 Q 320 640 620 770 T 1250 720" opacity="0.07"/>
+    <path d="M -50 1080 Q 260 980 640 1120 T 1250 1040" opacity="0.09"/>
+    <path d="M -50 1140 Q 280 1040 640 1180 T 1250 1100" opacity="0.07"/>
+    <path d="M -50 1400 Q 300 1300 620 1440 T 1250 1360" opacity="0.09"/>
   </g>
-  <g fill="#A65C36">
-    <circle cx="640" cy="230" r="2.5" opacity="0.5"/>
-    <circle cx="700" cy="255" r="2.5" opacity="0.4"/>
-    <circle cx="580" cy="660" r="2.5" opacity="0.5"/>
-    <circle cx="660" cy="700" r="2.5" opacity="0.4"/>
-    <circle cx="610" cy="1110" r="2.5" opacity="0.5"/>
+  <g fill="#AC3B2C">
+    <circle cx="640" cy="230" r="2.5" opacity="0.4"/>
+    <circle cx="700" cy="255" r="2.5" opacity="0.3"/>
+    <circle cx="580" cy="660" r="2.5" opacity="0.4"/>
+    <circle cx="660" cy="700" r="2.5" opacity="0.3"/>
+    <circle cx="610" cy="1110" r="2.5" opacity="0.4"/>
   </g>
 </svg>
 
-<div class="stamp">
-  26.3017° N, 98.1633° W<br>
-  Edinburg, TX — Rio Grande Valley
-</div>
-
 <div class="wrap">
-  <header class="page-header">
-    <a href="index.html" class="back-link">← Back to home</a>
-    <h1>Education &amp; Experience</h1>
-    <p class="page-sub">Academic background &amp; career timeline</p>
+  <div class="stamp">
+    26.3017° N, 98.1633° W<br>
+    Edinburg, TX — Rio Grande Valley
+  </div>
+
+  <header class="hero">
+    <div class="hanko-container">
+      <div class="hanko" aria-hidden="true">
+        <svg width="46" height="46" viewBox="0 0 46 46" xmlns="http://www.w3.org/2000/svg">
+          <path d="M23 3.2c-11 0-19.8 8.9-19.8 19.8 0 10.9 8.8 19.8 19.8 19.8 10.9 0 19.8-8.9 19.8-19.8C42.8 12.1 33.9 3.2 23 3.2z"
+            fill="none" stroke="#AC3B2C" stroke-width="2.6" opacity="0.9"/>
+          <text x="23" y="20" text-anchor="middle" font-family="'Shippori Mincho', serif" font-size="12" fill="#AC3B2C" font-weight="600">D</text>
+          <text x="23" y="35" text-anchor="middle" font-family="'Shippori Mincho', serif" font-size="12" fill="#AC3B2C" font-weight="600">S</text>
+        </svg>
+      </div>
+      <span class="vertical-label">FIELD NOTES · RANGE MAPS · RESILIENCE</span>
+    </div>
+
+    <h1>
+      Debanjan Sarkar, Ph.D.
+      <span class="role">Postdoctoral Fellow, University of Texas Rio Grande Valley</span>
+    </h1>
+
+    <div class="bio-grid">
+      <p class="thesis">
+        I'm a postdoctoral fellow working at the intersection of ecological modeling, species
+        distribution science, and community resilience education. My doctoral research examined
+        the impact of climate change on India's biodiversity and protected areas under different
+        SSP scenarios using geospatial technologies. I have 8+ years of experience across remote
+        sensing and GIS, climate change, landscape ecology, and nature-based solutions — and outside
+        the lab, I'm also a cartographer and mixed-media illustrator.
+      </p>
+
+      <nav class="side-nav">
+        <a href="research.html">Research Areas <span class="arrow">→</span></a>
+        <a href="education.html">Education &amp; Experience <span class="arrow">→</span></a>
+        <a href="publications.html">Publications <span class="arrow">→</span></a>
+        <a href="memberships.html">Memberships <span class="arrow">→</span></a>
+      </nav>
+    </div>
   </header>
 
-  <section>
-    <ul class="timeline">
-      <li>
-        <div class="when">2018 – 2024<span class="place">Dehradun, India</span></div>
-        <div>
-          <h4>PhD, Forestry (Environment Management)</h4>
-          <div class="org">Wildlife Institute of India · Registered from Forest Research Institute University</div>
-          <p>Thesis: "Resilience of Protected Areas of India to Climate Change: Current Status and Future Scenarios"</p>
-        </div>
-      </li>
-      <li>
-        <div class="when">Mar 2025 – Present<span class="place">Edinburg, TX</span></div>
-        <div>
-          <h4>Postdoctoral Fellow</h4>
-          <div class="org">University of Texas Rio Grande Valley</div>
-        </div>
-      </li>
-      <li>
-        <div class="when">2023 – 2025<span class="place">UK &amp; Ireland</span></div>
-        <div>
-          <h4>Project Consultant, Environmental Planning &amp; Ecology</h4>
-          <div class="org">Arcadis</div>
-        </div>
-      </li>
-      <li>
-        <div class="when">2018 – 2023<span class="place">Dehradun, India</span></div>
-        <div>
-          <h4>Senior Project Associate → Senior/Junior Research Fellow</h4>
-          <div class="org">Wildlife Institute of India</div>
-          <p>Integrated Development of Wildlife Habitat; linking protected area networks with near real-time avian locations (IBIN Project)</p>
-        </div>
-      </li>
-      <li>
-        <div class="when">2022<span class="place">Norwich, UK</span></div>
-        <div>
-          <h4>Newton-Bhabha PhD Placement Fellow</h4>
-          <div class="org">Tyndall Centre for Climate Change Research, University of East Anglia</div>
-        </div>
-      </li>
-      <li>
-        <div class="when">2014 – 2016<span class="place">Dehradun, India</span></div>
-        <div>
-          <h4>M.Sc., Environment Management (Natural Resource Management)</h4>
-          <div class="org">Forest Research Institute</div>
-        </div>
-      </li>
-      <li>
-        <div class="when">2011 – 2014<span class="place">Calcutta, India</span></div>
-        <div>
-          <h4>B.Sc. (Hons.), Zoology</h4>
-          <div class="org">Calcutta University</div>
-        </div>
-      </li>
-    </ul>
-  </section>
+  <div class="divider">
+    <svg viewBox="0 0 46 46" xmlns="http://www.w3.org/2000/svg">
+      <path d="M23 4C12.5 5.5 5 13 5.8 22.5c0.8 9.5 9.5 17 20 16 10-1 17.6-9 17-18.5C42.2 11 34.5 3.6 24.5 4c-1.5 0.1-2 0.3-1.5 1"
+        fill="none" stroke="#AC3B2C" stroke-width="1.6" stroke-linecap="round" opacity="0.75"/>
+    </svg>
+  </div>
 
-  <footer class="page-footer">
-    <a href="index.html">← Back to home</a>
+  <main>
+    <section class="about-main">
+      <h2 class="section-title">Technical Expertise</h2>
+      <div class="skills">
+        <span class="skill-tag">R</span>
+        <span class="skill-tag">ArcGIS / ArcPy</span>
+        <span class="skill-tag">QGIS</span>
+        <span class="skill-tag">Google Earth Engine</span>
+        <span class="skill-tag">ERDAS</span>
+        <span class="skill-tag">MaxEnt</span>
+        <span class="skill-tag">biomod2</span>
+        <span class="skill-tag">Species Distribution Modeling</span>
+        <span class="skill-tag">Ecological Consulting</span>
+        <span class="skill-tag">Field Survey Design</span>
+      </div>
+    </section>
+  </main>
+
+  <footer id="contact">
+    <div class="contact-box">
+      <h2>Get in touch</h2>
+      <p>Open to collaboration on species distribution modeling, climate resilience education,
+        and community-based conservation research.</p>
+      <div class="contact-row">
+        <a href="mailto:debanjan.sarkar@utrgv.edu">debanjan.sarkar@utrgv.edu</a>
+        <a href="https://github.com/debanjan1193" target="_blank" rel="noopener">GitHub ↗</a>
+        <a href="https://linkedin.com/in/deb1193" target="_blank" rel="noopener">LinkedIn ↗</a>
+        <a href="https://www.researchgate.net/profile/Debanjan-Sarkar" target="_blank" rel="noopener">ResearchGate ↗</a>
+      </div>
+    </div>
+    <p class="foot-note">Rio Grande Valley, Texas — updated 2026</p>
   </footer>
 </div>
 
