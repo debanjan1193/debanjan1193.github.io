@@ -349,7 +349,12 @@
   }
 
   @media (max-width: 768px) {
-    .wrap { margin: 0 auto; padding: 1.5rem; }
+    .wrap {
+      margin: 0 auto;
+      padding: 1.5rem;
+      padding-top: 7rem;    /* clears the days-left gauge (top-left, ~96px tall incl. offset) */
+      padding-bottom: 5rem; /* clears the date/time readout (bottom-right) */
+    }
     .bio-container { grid-template-columns: 1fr; gap: 1.5rem; }
     .side-nav { padding-left: 0; border-left: none; }
   }
