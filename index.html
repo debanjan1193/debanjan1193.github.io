@@ -87,15 +87,24 @@
     fill: currentColor;
   }
 
-  /* Days-left-in-month gauge: rotating-blob liquid fill, square (top-left, mirrors the theme toggle) */
-  .month-gauge {
+  /* Bottom-right corner stack: days-left gauge above the date/time readout */
+  .corner-stack {
     position: fixed;
-    top: 2rem;
-    left: 2rem;
+    bottom: 2rem;
+    right: 2rem;
     z-index: 3;
-    width: 92px;
-    height: 92px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.7rem;
     pointer-events: none;
+  }
+
+  /* Days-left-in-month gauge: rotating-blob liquid fill, square */
+  .month-gauge {
+    position: relative;
+    width: 110px;
+    height: 110px;
   }
 
   .liquid-tank {
@@ -140,36 +149,38 @@
   }
 
   .month-gauge-label .days-num {
-    font-size: 1.45rem;
-    font-weight: 600;
+    font-size: 2.1rem;
+    font-weight: 700;
     color: var(--text-color);
     line-height: 1;
+    margin-bottom: 0.5rem;
   }
 
-  .month-gauge-label small {
-    font-size: 0.52rem;
-    letter-spacing: 0.02em;
-    color: var(--muted-color);
-    margin-top: 0.2rem;
-    padding: 0 0.2rem;
+  .month-gauge-label .gauge-caption {
+    font-size: 0.62rem;
+    line-height: 1.3;
+    letter-spacing: 0.01em;
+    font-weight: 500;
+    color: #ffffff;
+  }
+
+  .month-gauge-label .gauge-caption span {
+    color: #ffffff;
+    font-weight: 500;
   }
 
   @media (max-width: 768px) {
-    .month-gauge { top: 1.25rem; left: 1.25rem; width: 76px; height: 76px; }
+    .corner-stack { bottom: 1.25rem; right: 1.25rem; gap: 0.5rem; }
+    .month-gauge { width: 88px; height: 88px; }
     .liquid-tank { border-width: 0.22rem; }
-    .month-gauge-label .days-num { font-size: 1.1rem; }
-    .month-gauge-label small { font-size: 0.42rem; }
+    .month-gauge-label .days-num { font-size: 1.5rem; }
+    .month-gauge-label .gauge-caption { font-size: 0.5rem; }
   }
 
-  /* Live date/time readout (bottom-right, mirrors the social links at bottom-left) */
+  /* Live date/time readout */
   .datetime-widget {
-    position: fixed;
-    bottom: 2rem;
-    right: 2rem;
-    z-index: 3;
     font-family: var(--font-mono);
     text-align: right;
-    pointer-events: none;
   }
 
   .datetime-widget .dt-date {
@@ -185,7 +196,6 @@
   }
 
   @media (max-width: 768px) {
-    .datetime-widget { bottom: 1.25rem; right: 1.25rem; }
     .datetime-widget .dt-date { font-size: 0.68rem; }
     .datetime-widget .dt-time { font-size: 0.6rem; }
   }
@@ -352,8 +362,7 @@
     .wrap {
       margin: 0 auto;
       padding: 1.5rem;
-      padding-top: 7rem;    /* clears the days-left gauge (top-left, ~96px tall incl. offset) */
-      padding-bottom: 5rem; /* clears the date/time readout (bottom-right) */
+      padding-bottom: 8rem; /* clears the stacked gauge + date/time readout, bottom-right */
     }
     .bio-container { grid-template-columns: 1fr; gap: 1.5rem; }
     .side-nav { padding-left: 0; border-left: none; }
@@ -382,21 +391,22 @@
   </svg>
 </button>
 
-<!-- Days-left-in-month gauge, rotating-blob liquid fill -->
-<div class="month-gauge" aria-hidden="true">
-  <div class="liquid-tank">
-    <div class="liquid-blob" id="monthLiquidBlob"></div>
+<!-- Bottom-right corner stack: days-left gauge above the date/time readout -->
+<div class="corner-stack">
+  <div class="month-gauge" aria-hidden="true">
+    <div class="liquid-tank">
+      <div class="liquid-blob" id="monthLiquidBlob"></div>
+    </div>
+    <div class="month-gauge-label">
+      <span class="days-num" id="daysLeftNum">–</span>
+      <small class="gauge-caption">days left in<br><span id="monthNameText">–</span></small>
+    </div>
   </div>
-  <div class="month-gauge-label">
-    <span class="days-num" id="daysLeftNum">–</span>
-    <small id="monthCaption">left</small>
-  </div>
-</div>
 
-<!-- Live date/time readout -->
-<div class="datetime-widget" aria-hidden="true">
-  <div class="dt-date" id="dtDate">–</div>
-  <div class="dt-time" id="dtTime">–</div>
+  <div class="datetime-widget" aria-hidden="true">
+    <div class="dt-date" id="dtDate">–</div>
+    <div class="dt-time" id="dtTime">–</div>
+  </div>
 </div>
 
 <div class="wrap">
@@ -428,7 +438,7 @@
     <div class="meta-label">Connect with me via:</div>
 
     <div class="bottom-bar">
-      <div class="social-links">
+      <div class="social-links" id="socialLinks">
         <a href="mailto:debanjan1193@gmail.com" title="Email" aria-label="Email">
           <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
         </a>
@@ -475,9 +485,10 @@ async function checkSpecialDay() {
 }
 
 // Handles both initial loads AND restoring visibility/checking events on Back-button navigation
-window.addEventListener('pageshow', (event) => {
+window.addEventListener('pageshow', async (event) => {
     document.body.style.opacity = '1';
     document.body.classList.add('page-loaded');
+    await greetingsReady;
     startGreetingTypewriter();
     checkSpecialDay();
 });
@@ -515,8 +526,9 @@ function seasonalHueOffsetDegrees(date = new Date()) {
     return AMPLITUDE_DEG * Math.sin(2 * Math.PI * (dayOfYear - 80) / 365);
 }
 
-// Typewriter greeting function with safe state reset
-const greetings = [
+// Greetings loaded from greetings.json, with these as a fallback if the
+// file is missing or fails to load (same fail-silent pattern as events.json)
+let greetings = [
   "Hi there!",
   "Hello, visitor!",
   "Welcome!",
@@ -524,6 +536,23 @@ const greetings = [
   "Greetings, human!",
   "Glad you're here!"
 ];
+
+async function loadGreetings() {
+    try {
+        const response = await fetch('greetings.json');
+        if (!response.ok) return;
+        const data = await response.json();
+        if (Array.isArray(data) && data.length > 0) {
+            greetings = data;
+        }
+    } catch (err) {
+        // Fail silently, keep the fallback greetings above
+    }
+}
+
+// Kicked off once at script load; pageshow awaits this so the very first
+// greeting can already come from greetings.json, not just the fallback.
+const greetingsReady = loadGreetings();
 
 let greetingTimer = null;
 
@@ -582,8 +611,8 @@ const initDateTime = () => {
 const initMonthGauge = () => {
     const blobEl = document.getElementById('monthLiquidBlob');
     const daysLeftEl = document.getElementById('daysLeftNum');
-    const captionEl = document.getElementById('monthCaption');
-    if (!blobEl || !daysLeftEl || !captionEl) return;
+    const monthNameEl = document.getElementById('monthNameText');
+    if (!blobEl || !daysLeftEl || !monthNameEl) return;
 
     const today = new Date();
     const year = today.getFullYear();
@@ -604,7 +633,7 @@ const initMonthGauge = () => {
     blobEl.style.setProperty('--fill-level', `${fillPercent * 100}%`);
 
     daysLeftEl.textContent = daysLeft;
-    captionEl.textContent = `left in ${monthName}`;
+    monthNameEl.textContent = `${monthName}.`;
 };
 
 const initFluid = () => {
