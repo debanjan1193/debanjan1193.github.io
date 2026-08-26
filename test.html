@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Great Indian Bustard — Subtle Shimmer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: radial-gradient(ellipse at 50% 40%, #b8a2cb 0%, #9f86b7 60%, #8b71a5 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      font-family: 'Oswald', sans-serif;
+      position: relative;
+    }
+
+    .grain {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.04;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    }
+
+    .stage {
+      position: relative;
+      width: 95vw;
+      max-width: 900px;
+      height: 75vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: -30px;
+    }
+
+    svg {
+      width: 100%;
+      height: 100%;
+      shape-rendering: geometricPrecision;
+      overflow: visible;
+      filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.08));
+    }
+
+    polygon {
+      stroke-width: 0.35px;
+      stroke-linejoin: round;
+      cursor: pointer;
+      transition: filter 0.2s ease;
+    }
+
+    polygon:hover {
+      filter: brightness(1.15);
+    }
+
+    /* ================= EXTREMELY SUBTLE FACET SHIMMER ================= */
+    .shine-facet {
+      animation: subtle-facet-glint 7s ease-in-out infinite;
+    }
+
+    @keyframes subtle-facet-glint {
+      0%, 42% {
+        filter: brightness(1);
+      }
+      46% {
+        /* Soft, minimal specular lift (~10% increase) */
+        filter: brightness(1.09);
+      }
+      50%, 100% {
+        filter: brightness(1);
+      }
+    }
+
+    /* Diagonal wave stagger */
+    #s1  { animation-delay: 0.05s; }
+    #s4  { animation-delay: 0.12s; }
+    #s5  { animation-delay: 0.18s; }
+    #s2  { animation-delay: 0.24s; }
+    #s3  { animation-delay: 0.30s; }
+    #s7  { animation-delay: 0.38s; }
+    #s8  { animation-delay: 0.44s; }
+    #s9  { animation-delay: 0.50s; }
+    #s10 { animation-delay: 0.58s; }
+    #s19 { animation-delay: 0.65s; }
+    #s11 { animation-delay: 0.72s; }
+    #s20 { animation-delay: 0.80s; }
+    #s13 { animation-delay: 0.88s; }
+    #s16 { animation-delay: 0.95s; }
+    #s21 { animation-delay: 1.02s; }
+    #s17 { animation-delay: 1.10s; }
+    #s18 { animation-delay: 1.18s; }
+    #s12 { animation-delay: 1.25s; }
+    #s14 { animation-delay: 1.32s; }
+    #s22 { animation-delay: 1.40s; }
+    #s15 { animation-delay: 1.48s; }
+    #s24 { animation-delay: 1.55s; }
+    #s26 { animation-delay: 1.62s; }
+    #s28 { animation-delay: 1.70s; }
+    #s25 { animation-delay: 1.78s; }
+    #s23 { animation-delay: 1.85s; }
+    #s29 { animation-delay: 1.92s; }
+    #s6  { animation-delay: 2.00s; }
+    #s27 { animation-delay: 2.08s; }
+    #s30 { animation-delay: 2.15s; }
+
+    /* Twitchy Avian Head (Anchored at Neck Joint: 66, 16) */
+    .walk-head-twitch {
+      animation: avian-head-twitch 4.2s infinite;
+      transform-origin: 66px 16px;
+    }
+
+    @keyframes avian-head-twitch {
+      0%, 15%   { transform: rotate(0deg) translate(0, 0); }
+      18%, 28%  { transform: rotate(-5.5deg) translate(-1.2px, -0.6px); }
+      30%, 42%  { transform: rotate(2.5deg) translate(0.5px, 0.2px); }
+      45%, 58%  { transform: rotate(-4deg) translate(-0.9px, -0.4px); }
+      62%, 74%  { transform: rotate(3deg) translate(0.3px, -0.2px); }
+      80%, 88%  { transform: rotate(-2deg) translate(-0.4px, -0.2px); }
+      94%, 100% { transform: rotate(0deg) translate(0, 0); }
+    }
+
+    /* Ground Contact Shadow */
+    .ground-shadow {
+      position: absolute;
+      top: 90%;
+      left: 56.5%;
+      transform: translateX(-50%);
+      width: 260px;
+      height: 18px;
+      background: radial-gradient(ellipse at center, rgba(30, 14, 46, 0.65) 0%, rgba(30, 14, 46, 0.25) 45%, rgba(30, 14, 46, 0) 75%);
+      border-radius: 50%;
+      filter: blur(5px);
+      pointer-events: none;
+    }
+
+    /* Footer Details Bar */
+    .footer-bar {
+      position: absolute;
+      bottom: 36px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      color: #ffffff;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      z-index: 10;
+    }
+
+    .piece-tag {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      line-height: 0.85;
+      padding-right: 14px;
+      border-right: 2px solid rgba(255, 255, 255, 0.5);
+    }
+
+    .piece-tag span {
+      font-size: 10px;
+      letter-spacing: 2px;
+      opacity: 0.75;
+    }
+
+    .piece-tag strong {
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    .species-title {
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      color: #ffffff;
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+    }
+
+    .badge-group {
+      display: flex;
+      gap: 8px;
+      margin-left: 8px;
+    }
+
+    .circle-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background-color: #40364f;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border: none;
+      color: rgba(255, 255, 255, 0.85);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      transition: transform 0.15s ease, background 0.2s ease;
+    }
+
+    .circle-btn:hover {
+      transform: scale(1.08);
+      background-color: #4f4262;
+    }
+
+    .circle-btn svg {
+      width: 14px;
+      height: 14px;
+      fill: currentColor;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="grain"></div>
+
+  <div class="stage">
+    <svg viewBox="0 0 100 100">
+
+      <!-- 1. STATIC LEGS & FEET -->
+      <g>
+        <!-- Back Leg -->
+        <polygon id="s22" class="shine-facet" points="56,58 52,59 57,70" fill="#ded7c8" stroke="#ded7c8" />
+        <polygon id="s28" class="shine-facet" points="52,59 53,71 57,69" fill="#8a8171" stroke="#8a8171" />
+        <polygon id="s6"  class="shine-facet" points="59,88 54,74 57,90" fill="#999081" stroke="#999081" />
+        <polygon id="s29" class="shine-facet" points="53,71 57,69 59,88" fill="#9e9482" stroke="#9e9482" />
+        <polygon id="s30" class="shine-facet" points="58,87 57,90 68,90" fill="#79705f" stroke="#79705f" />
+
+        <!-- Front Leg -->
+        <polygon id="s24" class="shine-facet" points="49,74 45,60 52,59" fill="#b5ad9e" stroke="#b5ad9e" />
+        <polygon id="s26" class="shine-facet" points="45,60 49,74 45,75" fill="#aba291" stroke="#aba291" />
+        <polygon id="s25" class="shine-facet" points="45,75 47,90 49,74" fill="#999081" stroke="#999081" />
+        <polygon id="s23" class="shine-facet" points="47,90 49,74 49,89" fill="#cac1b0" stroke="#cac1b0" />
+        <polygon id="s27" class="shine-facet" points="46,91 47,87 53,91" fill="#827967" stroke="#827967" />
+      </g>
+
+      <!-- 2. STATIC BODY, TAIL & DORSAL NECK -->
+      <g>
+        <!-- Black Wing Accent & Tail -->
+        <polygon id="s12" class="shine-facet" points="15,51 39,44 29,55" fill="#22252a" stroke="#22252a" />
+        <polygon id="s14" class="shine-facet" points="18,66 29,55 42,60" fill="#5c4d3c" stroke="#5c4d3c" />
+        <polygon id="s15" class="shine-facet" points="18,66 42,60 28,72" fill="#44392c" stroke="#44392c" />
+
+        <!-- Flanks & Belly Plate -->
+        <polygon id="s16" class="shine-facet" points="56,58 29,55 47,35" fill="#f5f8fb" stroke="#f5f8fb" />
+        <polygon id="s17" class="shine-facet" points="29,55 42,60 56,58" fill="#a89b89" stroke="#a89b89" />
+        <polygon id="s18" class="shine-facet" points="29,55 54,52 56,58" fill="#c2b5a3" stroke="#c2b5a3" />
+
+        <!-- Upper Neck Column -->
+        <polygon id="s7" class="shine-facet" points="61,14 66,16 62,29" fill="#c8d4df" stroke="#c8d4df" />
+        <polygon id="s8" class="shine-facet" points="66,16 68,25 62,29" fill="#dbe5ee" stroke="#dbe5ee" />
+      </g>
+
+      <!-- 3. GULAR POUCH MORPHING SHARDS (9, 10, 11, 13) -->
+      <g>
+        <polygon id="s9" class="shine-facet" points="62,29 68,25 73,34" fill="#cdd8e2" stroke="#cdd8e2">
+          <animate
+            attributeName="points"
+            dur="4.2s"
+            repeatCount="indefinite"
+            keyTimes="0; 0.20; 0.45; 0.75; 0.90; 1"
+            values="62,29 68,25 73,34;
+                    62,29 68,25 73,34;
+                    62,29 68,25 77,37;
+                    62,29 68,25 77,37;
+                    62,29 68,25 73,34;
+                    62,29 68,25 73,34"
+          />
+        </polygon>
+
+        <polygon id="s10" class="shine-facet" points="62,29 73,34 47,35" fill="#e2ecf5" stroke="#e2ecf5">
+          <animate
+            attributeName="points"
+            dur="4.2s"
+            repeatCount="indefinite"
+            keyTimes="0; 0.20; 0.45; 0.75; 0.90; 1"
+            values="62,29 73,34 47,35;
+                    62,29 73,34 47,35;
+                    62,29 77,37 47,35;
+                    62,29 77,37 47,35;
+                    62,29 73,34 47,35;
+                    62,29 73,34 47,35"
+          />
+        </polygon>
+
+        <polygon id="s11" class="shine-facet" points="47,35 73,34 73,46" fill="#f0f4f8" stroke="#f0f4f8">
+          <animate
+            attributeName="points"
+            dur="4.2s"
+            repeatCount="indefinite"
+            keyTimes="0; 0.20; 0.45; 0.75; 0.90; 1"
+            values="47,35 73,34 73,46;
+                    47,35 73,34 73,46;
+                    47,35 77,37 78,49;
+                    47,35 77,37 78,49;
+                    47,35 73,34 73,46;
+                    47,35 73,34 73,46"
+          />
+        </polygon>
+
+        <polygon id="s13" class="shine-facet" points="47,35 56,58 73,46" fill="#d8e1ea" stroke="#d8e1ea">
+          <animate
+            attributeName="points"
+            dur="4.2s"
+            repeatCount="indefinite"
+            keyTimes="0; 0.20; 0.45; 0.75; 0.90; 1"
+            values="47,35 56,58 73,46;
+                    47,35 56,58 73,46;
+                    47,35 56,58 78,49;
+                    47,35 56,58 78,49;
+                    47,35 56,58 73,46;
+                    47,35 56,58 73,46"
+          />
+        </polygon>
+      </g>
+
+      <!-- 4. TWITCHY AVIAN HEAD (Shards 1-5) -->
+      <g class="walk-head-twitch">
+        <polygon id="s1" class="shine-facet" points="71,8 75,10 66,16" fill="#dcd2b8" stroke="#dcd2b8" />
+        <polygon id="s2" class="shine-facet" points="70,9 66,17 61,14" fill="#ecdcc3" stroke="#ecdcc3" />
+        <polygon id="s3" class="shine-facet" points="67,7 65,6 59,16" fill="#2a2e35" stroke="#2a2e35" />
+        <polygon id="s4" class="shine-facet" points="65,6 61,14 71,8" fill="#1c1f24" stroke="#1c1f24" />
+        <polygon id="s5" class="shine-facet" points="73,10 79,10 71,8" fill="#c9be9f" stroke="#c9be9f" />
+      </g>
+
+      <!-- 5. FOREGROUND BROWN WING (Shards 19-21) -->
+      <g>
+        <polygon id="s19" class="shine-facet" points="46,32 62,29 67,48" fill="#7a5c43" stroke="#7a5c43" />
+        <polygon id="s20" class="shine-facet" points="46,32 50,50 67,48" fill="#b88c67" stroke="#b88c67" />
+        <polygon id="s21" class="shine-facet" points="17,48 46,32 50,50" fill="#9c7653" stroke="#9c7653" />
+      </g>
+
+    </svg>
+
+    <div class="ground-shadow"></div>
+  </div>
+
+  <div class="footer-bar">
+    <div class="piece-tag">
+      <span>PIECE</span>
+      <strong>30</strong>
+    </div>
+
+    <div class="species-title">GREAT INDIAN BUSTARD</div>
+
+    <div class="badge-group">
+      <button class="circle-btn" title="Species Information">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+        </svg>
+      </button>
+
+      <button class="circle-btn" title="Toggle Wireframe Shards">
+        <svg viewBox="0 0 24 24">
+          <polygon points="12,3 2,21 22,21" fill="none" stroke="currentColor" stroke-width="2"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+</body>
+</html>
