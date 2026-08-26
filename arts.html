@@ -7,14 +7,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&display=swap" rel="stylesheet">
-
 <style>
   * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
   }
-
   body {
     background-color: #8a969d;
     color: #ffffff;
@@ -30,49 +28,330 @@
   header {
     margin-bottom: 2rem;
   }
-
   h1 {
     font-size: clamp(2.2rem, 5vw, 3.2rem);
     font-weight: 700;
     letter-spacing: 0.05em;
     line-height: 1.1;
   }
-
   .subtext {
     font-size: clamp(1.2rem, 3vw, 1.8rem);
     opacity: 0.9;
     margin-top: 0.25rem;
   }
 
-  /* Left-aligned, compact artwork container */
-  .artwork-container {
+  /* ================= Blob-morph artwork carousel ================= */
+  :root {
+    --ease: cubic-bezier(0.29, 0.57, 0.12, 0.99);
+    --duration: .6s;
+    --size: 560px;
+    --scaleMask: 1;
+    --scaleBtn: 1;
+  }
+  @media (max-width: 900px) {
+    :root { --size: 440px; --scaleMask: .8; --scaleBtn: .85; }
+  }
+  @media (max-width: 700px) {
+    :root { --size: 340px; --scaleMask: .62; --scaleBtn: .75; }
+  }
+  @media (max-width: 500px) {
+    :root { --size: 260px; --scaleMask: .48; --scaleBtn: .65; }
+  }
+
+  .artwork-showcase {
     width: 100%;
     display: flex;
     justify-content: flex-start;
-    align-items: flex-start;
   }
 
-  /* Drop shadow that conforms to transparent PNG contours */
-  .artwork-container img {
-    max-width: 380px;
-    max-height: 45vh;
-    width: auto;
-    height: auto;
-    object-fit: contain;
-    filter: drop-shadow(0px 12px 18px rgba(0, 0, 0, 0.35));
+  .carousel {
+    position: relative;
+    z-index: 1;
+    width: var(--size);
+    height: var(--size);
+  }
+
+  .carousel--play {
+    position: absolute;
+    z-index: 10;
+    bottom: calc(10% * var(--scaleBtn));
+    left: calc(10% * var(--scaleBtn));
+    transform: rotate(-20deg) scale(var(--scaleBtn));
+    transition: transform .2s var(--ease);
+    width: 110px;
+    height: 110px;
+    background: #e8a33d;
+    box-shadow: 0 10px 20px -6px #e8a33d;
+    border-radius: 50%;
+    color: #211e1b;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    overflow: hidden;
+  }
+  .carousel--play::before {
+    content: '';
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    box-shadow: inset 0 0 0 10px rgba(255, 255, 255, .25);
+    border-radius: 50%;
+    transform: scale(1.2);
+    transition: transform .4s var(--ease);
+  }
+  .carousel--play:hover::before {
+    transform: scale(1);
+  }
+  .carousel--play:active {
+    transform: scale(calc(var(--scaleBtn) * .9)) rotate(-5deg);
+  }
+
+  .carousel svg {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    fill: #f3ead9;
+    pointer-events: none;
+  }
+  .carousel svg #mask {
+    transform: scale(var(--scaleMask));
+  }
+
+  .carousel--images {
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    -webkit-clip-path: url(#mask);
+    clip-path: url(#mask);
+    overflow: hidden;
+  }
+
+  .carousel--images img {
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity var(--duration) var(--ease), transform var(--duration) var(--ease);
+    opacity: 0;
+    transform: scale(.9) translateZ(0);
+  }
+  .carousel--images img.active {
+    transform: scale(1) translateZ(0);
+    opacity: 1;
   }
 </style>
 </head>
 <body>
-
   <header>
     <h1>My Artworks</h1>
     <p class="subtext">I make my arts on paper and sometime on digital media</p>
   </header>
 
-  <main class="artwork-container">
-    <img src="1.png" alt="My Artwork">
+  <main class="artwork-showcase">
+    <div class="carousel">
+      <svg id="blob-1" viewBox="0 0 800 800">
+        <defs>
+          <clipPath id="mask">
+            <path id="path-1"/>
+          </clipPath>
+        </defs>
+        <path id="path-2" />
+      </svg>
+      <div class="carousel--images" id="carouselImages">
+        <!-- Images are built automatically from artworks.json -->
+      </div>
+      <div class="carousel--play" id="carouselPlay">
+        Next
+      </div>
+    </div>
   </main>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script>
+    /*--------------------
+    SupahBlob
+    --------------------*/
+    class SupahBlob {
+      constructor(obj) {
+        if (!obj.el) return;
+
+        this.el = obj.el;
+        this.segments = obj.segments || 8;
+        this.centerX = obj.centerX || 400;
+        this.centerY = obj.centerY || 400;
+        this.minRadius = obj.minRadius || 300;
+        this.maxRadius = obj.maxRadius || 380;
+        this.minDuration = obj.minDuration || 1;
+        this.maxDuration = obj.maxDuration || 2;
+        this.maskEl = obj.maskEl || null;
+        this.maskID = obj.maskID || null;
+
+        this.init();
+      }
+
+      init() {
+        this.points = [];
+        const slice = Math.PI * 2 / this.segments;
+        const tl = gsap.timeline({
+          onUpdate: () => {
+            this.update();
+          }
+        });
+
+        for (let i = 0; i < this.segments; i++) {
+          const angle = slice * i;
+          const duration = gsap.utils.random(this.minDuration, this.maxDuration);
+
+          const p = {
+            x: this.centerX + (Math.cos(angle) * this.minRadius),
+            y: this.centerX + (Math.sin(angle) * this.minRadius),
+          };
+
+          const tween = gsap.to(p, {
+            duration,
+            x: this.centerX + Math.cos(angle) * this.maxRadius,
+            y: this.centerX + Math.sin(angle) * this.maxRadius,
+            ease: 'sine.inOut',
+            repeat: -1,
+            yoyo: true,
+          });
+          tl.add(tween, -duration);
+          this.points.push(p);
+        }
+      }
+
+      update() {
+        this.el.setAttribute('d', this.createPath());
+
+        // Force clipPath update
+        if (this.maskEl) {
+          this.maskEl.style.clipPath = 'none';
+          this.maskEl.style.webkitClipPath = 'none';
+          this.maskEl.offsetWidth;
+          this.maskEl.style.clipPath = `url("${this.maskID}")`;
+          this.maskEl.style.webkitClipPath = `url("${this.maskID}")`;
+        }
+      }
+
+      createPath() {
+        const data = this.points;
+        const size = this.points.length;
+
+        let path = `M${data[0].x} ${data[0].y} C`;
+
+        for (let i = 0; i < size; i++) {
+          const p0 = data[(i - 1 + size) % size];
+          const p1 = data[i];
+          const p2 = data[(i + 1) % size];
+          const p3 = data[(i + 2) % size];
+
+          const x1 = p1.x + (p2.x - p0.x) * 0.15;
+          const y1 = p1.y + (p2.y - p0.y) * 0.15;
+          const x2 = p2.x - (p3.x - p1.x) * 0.15;
+          const y2 = p2.y - (p3.y - p1.y) * 0.15;
+
+          path += ` ${x1} ${y1} ${x2} ${y2} ${p2.x} ${p2.y}`;
+        }
+
+        return `${path}z`;
+      }
+    }
+
+    // Fetches artworks.json (an array of filenames, or {file, alt} objects)
+    // and builds the carousel's <img> elements from it. Falls back to a
+    // single default image if the file is missing, so the page still works.
+    const buildArtworkImages = (artworks) => {
+      const container = document.getElementById('carouselImages');
+      container.innerHTML = '';
+      artworks.forEach((entry, i) => {
+        const file = typeof entry === 'string' ? entry : entry.file;
+        const alt = typeof entry === 'string' ? 'Artwork' : (entry.alt || 'Artwork');
+
+        const img = document.createElement('img');
+        img.src = file;
+        img.alt = alt;
+        if (i === 0) img.classList.add('active');
+        container.appendChild(img);
+      });
+    };
+
+    const loadArtworksAndInit = async () => {
+      let artworks = ['1.png']; // fallback if artworks.json is missing/invalid
+      try {
+        const response = await fetch('artworks.json');
+        if (response.ok) {
+          const data = await response.json();
+          if (Array.isArray(data) && data.length > 0) {
+            artworks = data;
+          }
+        }
+      } catch (err) {
+        // Fail silently, keep the fallback above
+      }
+
+      buildArtworkImages(artworks);
+
+      /*--------------------
+      Blob Mask
+      --------------------*/
+      new SupahBlob({
+        el: document.querySelector('#path-1'),
+        segments: 9,
+        centerX: 400,
+        centerY: 400,
+        minRadius: 300,
+        maxRadius: 380,
+        minDuration: 1,
+        maxDuration: 3,
+        maskEl: document.querySelector('.carousel--images'),
+        maskID: '#mask'
+      });
+
+      /*--------------------
+      Blob Background
+      --------------------*/
+      new SupahBlob({
+        el: document.querySelector('#path-2'),
+        segments: 9,
+        centerX: 400,
+        centerY: 400,
+        minRadius: 320,
+        maxRadius: 400,
+        minDuration: 2,
+        maxDuration: 3
+      });
+
+      /*--------------------
+      Carousel advance
+      --------------------*/
+      let active = 0;
+      const slides = document.querySelectorAll('.carousel--images img');
+      document.querySelector('.carousel--play').addEventListener('click', () => {
+        if (slides.length < 2) return;
+        slides[active].classList.remove('active');
+        active = active < slides.length - 1 ? active + 1 : 0;
+        slides[active].classList.add('active');
+      });
+    };
+
+    loadArtworksAndInit();
+  </script>
 </body>
 </html>
