@@ -1,4 +1,4 @@
-  :root{
+:root{
     --ink:#211E1B;
     --paper:#EFE9DC;
     --paper-alt:#E5DCC7;
@@ -222,6 +222,40 @@
 
   @media (max-width:600px){
     .timeline li{ grid-template-columns:1fr; gap:4px; }
+  }
+
+  /* ---------- timeline sub-roles (multiple positions within one org) ---------- */
+  .sub-roles{
+    list-style:none;
+    margin:16px 0 0;
+    padding:0 0 0 22px;
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+    border-left:1px solid var(--line);
+  }
+  .sub-roles li{
+    display:block;
+    padding:0;
+    border-bottom:none;
+  }
+  .sub-roles .sub-when{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11.5px;
+    letter-spacing:0.03em;
+    color:var(--vermillion);
+    margin-bottom:4px;
+  }
+  .sub-roles h4{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-size:15px;
+    margin:0 0 3px;
+  }
+  .sub-roles p{
+    margin:2px 0 0;
+    font-size:13.5px;
+    color:var(--muted);
   }
 
   /* ---------- publications ---------- */
