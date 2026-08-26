@@ -10,11 +10,13 @@
 
 <style>
   :root {
-    --bg-color: #000000;
-    --text-color: #e6e6e6;
-    --muted-color: #888888;
-    --gold-accent: #f59e0b;
-    --border-color: #333333;
+    --bg-color: #05070d;
+    --text-color: #eef0f7;
+    --muted-color: #97a0b8;
+    --gold-accent: #818cf8;
+    --border-color: #2d3450;
+    --gold-accent-bg: rgba(129, 140, 248, 0.10);
+    --gold-accent-border: rgba(129, 140, 248, 0.28);
     --font-serif: 'Instrument Serif', serif;
     --font-sans: 'Inter', sans-serif;
     --font-mono: 'IBM Plex Mono', monospace;
@@ -22,11 +24,13 @@
   }
 
   body.light-theme {
-    --bg-color: #fdfbf7;
-    --text-color: #1a1a1a;
-    --muted-color: #666666;
-    --gold-accent: #d97706;
-    --border-color: #e5e0d8;
+    --bg-color: #f7f8fc;
+    --text-color: #10131f;
+    --muted-color: #565f78;
+    --gold-accent: #4338ca;
+    --border-color: #c3c8dc;
+    --gold-accent-bg: rgba(67, 56, 202, 0.08);
+    --gold-accent-border: rgba(67, 56, 202, 0.25);
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -83,6 +87,109 @@
     fill: currentColor;
   }
 
+  /* Days-left-in-month gauge: rotating-blob liquid fill, square (top-left, mirrors the theme toggle) */
+  .month-gauge {
+    position: fixed;
+    top: 2rem;
+    left: 2rem;
+    z-index: 3;
+    width: 92px;
+    height: 92px;
+    pointer-events: none;
+  }
+
+  .liquid-tank {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    box-sizing: border-box;
+    border: 0.28rem solid var(--border-color);
+    border-radius: 12px;
+    background: var(--bg-color);
+    transition: border-color 0.4s ease, background-color 0.4s ease;
+  }
+
+  .liquid-blob {
+    position: absolute;
+    left: 50%;
+    width: 200%;
+    aspect-ratio: 1;
+    box-sizing: border-box;
+    background: #04acff;
+    border-radius: 40%;
+    /* bottom = fillLevel - 200%, so the blob's visible top edge sits at
+       the fill line (see math in initMonthGauge) */
+    bottom: calc(var(--fill-level, 0%) - 200%);
+    transform: translateX(-50%) rotate(0deg);
+    animation: liquidSpin 9s linear infinite;
+  }
+
+  @keyframes liquidSpin {
+    to { transform: translateX(-50%) rotate(360deg); }
+  }
+
+  .month-gauge-label {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    text-align: center;
+  }
+
+  .month-gauge-label .days-num {
+    font-size: 1.45rem;
+    font-weight: 600;
+    color: var(--text-color);
+    line-height: 1;
+  }
+
+  .month-gauge-label small {
+    font-size: 0.52rem;
+    letter-spacing: 0.02em;
+    color: var(--muted-color);
+    margin-top: 0.2rem;
+    padding: 0 0.2rem;
+  }
+
+  @media (max-width: 768px) {
+    .month-gauge { top: 1.25rem; left: 1.25rem; width: 76px; height: 76px; }
+    .liquid-tank { border-width: 0.22rem; }
+    .month-gauge-label .days-num { font-size: 1.1rem; }
+    .month-gauge-label small { font-size: 0.42rem; }
+  }
+
+  /* Live date/time readout (bottom-right, mirrors the social links at bottom-left) */
+  .datetime-widget {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 3;
+    font-family: var(--font-mono);
+    text-align: right;
+    pointer-events: none;
+  }
+
+  .datetime-widget .dt-date {
+    font-size: 0.78rem;
+    color: var(--text-color);
+    line-height: 1.3;
+  }
+
+  .datetime-widget .dt-time {
+    font-size: 0.72rem;
+    color: var(--muted-color);
+    line-height: 1.3;
+  }
+
+  @media (max-width: 768px) {
+    .datetime-widget { bottom: 1.25rem; right: 1.25rem; }
+    .datetime-widget .dt-date { font-size: 0.68rem; }
+    .datetime-widget .dt-time { font-size: 0.6rem; }
+  }
+
   .sun-icon { display: none; }
   .moon-icon { display: block; }
 
@@ -112,8 +219,8 @@
     font-family: var(--font-mono);
     font-size: 0.85rem;
     color: var(--gold-accent);
-    background: rgba(245, 158, 11, 0.08);
-    border: 1px solid rgba(245, 158, 11, 0.25);
+    background: var(--gold-accent-bg);
+    border: 1px solid var(--gold-accent-border);
     padding: 0.4rem 0.8rem;
     border-radius: 4px;
     margin-bottom: 1.25rem;
@@ -246,6 +353,14 @@
     .bio-container { grid-template-columns: 1fr; gap: 1.5rem; }
     .side-nav { padding-left: 0; border-left: none; }
   }
+
+  /* Visible keyboard focus states (accessibility) */
+  a:focus-visible,
+  button:focus-visible {
+    outline: 2px solid var(--gold-accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
 </style>
 </head>
 <body>
@@ -258,9 +373,26 @@
     <path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.303 0 0 1-5.4-5.4c0-1.81 0.89-3.42 2.26-4.4C12.92 3.04 12.46 3 12 3z"/>
   </svg>
   <svg class="sun-icon" viewBox="0 0 24 24">
-    <path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0s-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0s-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41l-1.06-1.06zm1.06-10.96c.39-.39.39-1.03 0-1.41s-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06c.39-.39.39-1.03 0-1.41s-1.03-.39-1.41 0z"/>
+    <path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0s-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0s-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41l-1.06-1.06zm1.06-10.96c.39-.39.39-1.03 0-1.41s-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06c-.39-.39-.39-1.03 0-1.41s-1.03-.39-1.41 0z"/>
   </svg>
 </button>
+
+<!-- Days-left-in-month gauge, rotating-blob liquid fill -->
+<div class="month-gauge" aria-hidden="true">
+  <div class="liquid-tank">
+    <div class="liquid-blob" id="monthLiquidBlob"></div>
+  </div>
+  <div class="month-gauge-label">
+    <span class="days-num" id="daysLeftNum">–</span>
+    <small id="monthCaption">left</small>
+  </div>
+</div>
+
+<!-- Live date/time readout -->
+<div class="datetime-widget" aria-hidden="true">
+  <div class="dt-date" id="dtDate">–</div>
+  <div class="dt-time" id="dtTime">–</div>
+</div>
 
 <div class="wrap">
   <main>
@@ -280,9 +412,9 @@
       </p>
 
       <nav class="side-nav">
-        <a href="education.html"> Experience & Education</a>
+        <a href="education.html"> Experience &amp; Education</a>
         <a href="publications.html"> Publications</a>
-        <a href="research.html"> Research & Other Activities</a>
+        <a href="research.html"> Research &amp; Other Activities</a>
         <a href="arts.html"> My Artworks</a>
         <a href="construction.html"> My maps</a>
       </nav>
@@ -365,6 +497,19 @@ document.getElementById('themeToggle').addEventListener('click', () => {
     document.body.classList.toggle('light-theme');
 });
 
+// --- Seasonal drift (background smoke only) ---
+// Text and link colors stay fixed for accessibility; only the decorative
+// fluid background hue drifts with the calendar. Warms toward autumn
+// (~day 280 of the year), cools toward spring (~day 80).
+function seasonalHueOffsetDegrees(date = new Date()) {
+    const start = new Date(date.getFullYear(), 0, 0);
+    const diff = date - start;
+    const oneDay = 1000 * 60 * 60 * 24;
+    const dayOfYear = Math.floor(diff / oneDay);
+    const AMPLITUDE_DEG = 15;
+    return AMPLITUDE_DEG * Math.sin(2 * Math.PI * (dayOfYear - 80) / 365);
+}
+
 // Typewriter greeting function with safe state reset
 const greetings = [
   "Hi there!",
@@ -400,7 +545,62 @@ function startGreetingTypewriter() {
 
 window.addEventListener('load', () => {
     initFluid();
+    initMonthGauge();
+    initDateTime();
 });
+
+// Live date/time readout in the visitor's own local timezone
+const initDateTime = () => {
+    const dateEl = document.getElementById('dtDate');
+    const timeEl = document.getElementById('dtTime');
+    if (!dateEl || !timeEl) return;
+
+    const dateFormatter = new Intl.DateTimeFormat('en-US', {
+        weekday: 'short', month: 'short', day: 'numeric', year: 'numeric'
+    });
+    const timeFormatter = new Intl.DateTimeFormat('en-US', {
+        hour: 'numeric', minute: '2-digit', second: '2-digit',
+        hour12: true, timeZoneName: 'short'
+    });
+
+    function tick() {
+        const now = new Date();
+        dateEl.textContent = dateFormatter.format(now);
+        timeEl.textContent = timeFormatter.format(now);
+    }
+
+    tick();
+    setInterval(tick, 1000);
+};
+
+// Days-left-in-month liquid gauge: water level = fraction of the month remaining
+const initMonthGauge = () => {
+    const blobEl = document.getElementById('monthLiquidBlob');
+    const daysLeftEl = document.getElementById('daysLeftNum');
+    const captionEl = document.getElementById('monthCaption');
+    if (!blobEl || !daysLeftEl || !captionEl) return;
+
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = today.getMonth();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const dayOfMonth = today.getDate();
+    const daysLeft = daysInMonth - dayOfMonth;
+    const monthName = today.toLocaleString('en-US', { month: 'long' });
+
+    // Clamp so there's always a sliver of blob visible at the extremes
+    const fillPercent = Math.max(0.05, Math.min(0.95, daysLeft / daysInMonth));
+
+    // The blob is 200% of the tank's size, centered, rotating in place.
+    // bottom = fillLevel - 200% puts its visible top edge exactly at the
+    // fill line: fillLevel=100% -> bottom=-100% (blob top reaches the tank's
+    // top edge, full); fillLevel=0% -> bottom=-200% (blob entirely hidden
+    // below the tank, empty).
+    blobEl.style.setProperty('--fill-level', `${fillPercent * 100}%`);
+
+    daysLeftEl.textContent = daysLeft;
+    captionEl.textContent = `left in ${monthName}`;
+};
 
 const initFluid = () => {
 
@@ -1379,14 +1579,19 @@ const initFluid = () => {
         return delta;
     }
 
-    // Golden Amber smoke hue generation
+    // Seasonal hue drift: recenters the amber smoke band by the same
+    // offset used for --gold-accent, so the background and UI move together.
+    // Indigo hue center (~243°, matching the Slate/Indigo accent), with the
+    // same seasonal drift as before layered on top.
+    const BASE_HUE_FRACTION = 0.676;
+    const SEASON_HUE_FRACTION = seasonalHueOffsetDegrees() / 360;
+
+    // Slate/Indigo smoke: built directly in HSV so brightness/saturation
+    // stay correct for any hue, instead of the old per-channel RGB hack
+    // that was only tuned for warm amber.
     function generateColor () {
-        let h = Math.random() * 0.08 + 0.08;
-        let c = HSVtoRGB(h, 0.95, 0.85);
-        c.r *= 0.28;
-        c.g *= 0.16;
-        c.b *= 0.02;
-        return c;
+        let h = BASE_HUE_FRACTION + SEASON_HUE_FRACTION + (Math.random() * 0.03 - 0.015);
+        return HSVtoRGB(h, 0.8, 0.32);
     }
 
     function HSVtoRGB(h, s, v) {
