@@ -75,7 +75,6 @@
         filter: brightness(1);
       }
       46% {
-        /* Soft, minimal specular lift (~10% increase) */
         filter: brightness(1.09);
       }
       50%, 100% {
@@ -129,20 +128,6 @@
       62%, 74%  { transform: rotate(3deg) translate(0.3px, -0.2px); }
       80%, 88%  { transform: rotate(-2deg) translate(-0.4px, -0.2px); }
       94%, 100% { transform: rotate(0deg) translate(0, 0); }
-    }
-
-    /* Ground Contact Shadow */
-    .ground-shadow {
-      position: absolute;
-      top: 90%;
-      left: 56.5%;
-      transform: translateX(-50%);
-      width: 260px;
-      height: 18px;
-      background: radial-gradient(ellipse at center, rgba(30, 14, 46, 0.65) 0%, rgba(30, 14, 46, 0.25) 45%, rgba(30, 14, 46, 0) 75%);
-      border-radius: 50%;
-      filter: blur(5px);
-      pointer-events: none;
     }
 
     /* Footer Details Bar */
@@ -225,6 +210,21 @@
 
   <div class="stage">
     <svg viewBox="0 0 100 100">
+
+      <defs>
+        <!-- Internal radial shadow anchored in exact SVG geometry coordinates -->
+        <radialGradient id="foot-shadow-grad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#1e0e2e" stop-opacity="0.6" />
+          <stop offset="45%" stop-color="#1e0e2e" stop-opacity="0.25" />
+          <stop offset="100%" stop-color="#1e0e2e" stop-opacity="0" />
+        </radialGradient>
+        <filter id="shadow-blur" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="1.2" />
+        </filter>
+      </defs>
+
+      <!-- 0. ANCHORED FEET SHADOW (Locked below feet: x=46-68, y=91) -->
+      <ellipse cx="57" cy="91.5" rx="14" ry="2.2" fill="url(#foot-shadow-grad)" filter="url(#shadow-blur)" />
 
       <!-- 1. STATIC LEGS & FEET -->
       <g>
@@ -340,8 +340,6 @@
       </g>
 
     </svg>
-
-    <div class="ground-shadow"></div>
   </div>
 
   <div class="footer-bar">
