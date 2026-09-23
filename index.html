@@ -229,6 +229,7 @@
     color: var(--muted);
     padding-top: 0.15rem;
   }
+  .pub-details { min-width: 0; }
   .pub-authors { color: var(--text); font-size: 0.95rem; margin-bottom: 0.3rem; }
   .pub-authors .me { font-weight: 700; color: var(--accent); }
   .pub-title { font-size: 1rem; margin-bottom: 0.35rem; }
@@ -707,6 +708,14 @@
     pubs.forEach((pub) => {
       const li = document.createElement('li');
 
+      // Everything below goes in ONE wrapper div, so the <li> grid only ever
+      // has 2 items (the ::before number, and this wrapper) — matching its
+      // 2-column template. Without this, each child (authors/title/venue/
+      // link) becomes its own grid item and mis-places into the narrow
+      // number column, wrapping the title one word per line.
+      const details = document.createElement('div');
+      details.className = 'pub-details';
+
       const authorsDiv = document.createElement('div');
       authorsDiv.className = 'pub-authors';
       const authorsHtml = pub.authors
@@ -722,9 +731,9 @@
       venueDiv.className = 'pub-venue';
       venueDiv.innerHTML = pub.venue;
 
-      li.appendChild(authorsDiv);
-      li.appendChild(titleDiv);
-      li.appendChild(venueDiv);
+      details.appendChild(authorsDiv);
+      details.appendChild(titleDiv);
+      details.appendChild(venueDiv);
 
       if (pub.link) {
         const linkDiv = document.createElement('div');
@@ -735,9 +744,10 @@
         a.rel = 'noopener';
         a.textContent = pub.link.label;
         linkDiv.appendChild(a);
-        li.appendChild(linkDiv);
+        details.appendChild(linkDiv);
       }
 
+      li.appendChild(details);
       list.appendChild(li);
     });
   }
