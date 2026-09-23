@@ -194,7 +194,7 @@
   .timeline .meta .place::before { content: '\2014'; margin: 0 0.4rem; color: var(--line); }
   .timeline p { color: var(--muted); font-size: 0.92rem; max-width: 60ch; }
 
-  /* Placeholder sections (Publications, Maps) */
+  /* Placeholder sections (Maps) */
   .empty-state {
     border: 1px dashed var(--line);
     border-radius: 12px;
@@ -204,6 +204,40 @@
   }
   .empty-state a { color: var(--accent); }
   .empty-state a:hover { text-decoration: underline; }
+
+  /* Publications */
+  .pub-list {
+    list-style: none;
+    counter-reset: pub;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .pub-list li {
+    counter-increment: pub;
+    display: grid;
+    grid-template-columns: 2rem 1fr;
+    gap: 1rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .pub-list li:last-child { border-bottom: none; padding-bottom: 0; }
+  .pub-list li::before {
+    content: counter(pub);
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--muted);
+    padding-top: 0.15rem;
+  }
+  .pub-authors { color: var(--text); font-size: 0.95rem; margin-bottom: 0.3rem; }
+  .pub-authors .me { font-weight: 700; color: var(--accent); }
+  .pub-title { font-size: 1rem; margin-bottom: 0.35rem; }
+  .pub-title em { font-style: italic; }
+  .pub-venue { color: var(--muted); font-size: 0.9rem; font-style: italic; margin-bottom: 0.35rem; }
+  .pub-link { font-family: var(--font-mono); font-size: 0.82rem; }
+  .pub-link a:hover { color: var(--accent); text-decoration: underline; }
+  .pub-empty { grid-column: 1 / -1; color: var(--muted); }
+  .pub-empty a { color: var(--accent); }
 
   /* Contact */
   .contact-body p { color: var(--muted); max-width: 50ch; margin-bottom: 1.5rem; }
@@ -438,14 +472,11 @@
       </section>
     </section>
 
-    <!-- PUBLICATIONS (placeholder — no content provided yet) -->
+    <!-- PUBLICATIONS -->
     <section id="tab-publications" class="tab-panel">
       <h2 class="section-title">Publications</h2>
       <div class="title-underline"></div>
-      <div class="empty-state">
-        Publication list coming soon.<br>
-        In the meantime, see my <a href="https://www.researchgate.net/profile/Debanjan-Sarkar" target="_blank" rel="noopener">ResearchGate profile</a>.
-      </div>
+      <ol class="pub-list" id="pub-list"></ol>
     </section>
 
     <!-- ARTWORKS -->
@@ -655,6 +686,63 @@
       }
     };
   })();
+
+  // ---------- Publications (reads from publications.json) ----------
+  async function loadPublications() {
+    const list = document.getElementById('pub-list');
+    if (!list) return;
+    try {
+      const response = await fetch('publications.json');
+      if (!response.ok) throw new Error('failed to fetch');
+      const pubs = await response.json();
+      if (!Array.isArray(pubs) || pubs.length === 0) throw new Error('empty');
+      renderPublications(pubs, list);
+    } catch (err) {
+      list.innerHTML = `<li class="pub-empty">Unable to load publications right now. See my <a href="https://www.researchgate.net/profile/Debanjan-Sarkar" target="_blank" rel="noopener">ResearchGate profile</a> instead.</li>`;
+    }
+  }
+
+  function renderPublications(pubs, list) {
+    list.innerHTML = '';
+    pubs.forEach((pub) => {
+      const li = document.createElement('li');
+
+      const authorsDiv = document.createElement('div');
+      authorsDiv.className = 'pub-authors';
+      const authorsHtml = pub.authors
+        .map(a => a === 'Sarkar, D.' ? `<span class="me">${a}</span>` : a)
+        .join(', ');
+      authorsDiv.innerHTML = `${authorsHtml} (${pub.year}).`;
+
+      const titleDiv = document.createElement('div');
+      titleDiv.className = 'pub-title';
+      titleDiv.innerHTML = pub.title;
+
+      const venueDiv = document.createElement('div');
+      venueDiv.className = 'pub-venue';
+      venueDiv.innerHTML = pub.venue;
+
+      li.appendChild(authorsDiv);
+      li.appendChild(titleDiv);
+      li.appendChild(venueDiv);
+
+      if (pub.link) {
+        const linkDiv = document.createElement('div');
+        linkDiv.className = 'pub-link';
+        const a = document.createElement('a');
+        a.href = pub.link.url;
+        a.target = '_blank';
+        a.rel = 'noopener';
+        a.textContent = pub.link.label;
+        linkDiv.appendChild(a);
+        li.appendChild(linkDiv);
+      }
+
+      list.appendChild(li);
+    });
+  }
+
+  loadPublications();
 </script>
 
 </body>
