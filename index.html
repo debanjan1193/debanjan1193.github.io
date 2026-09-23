@@ -33,6 +33,11 @@
   }
 
   a { color: inherit; text-decoration: none; }
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
 
   .page {
     max-width: 1200px;
@@ -53,6 +58,8 @@
     align-items: center;
     text-align: center;
     gap: 1.25rem;
+    position: sticky;
+    top: 2.5rem;
   }
 
   .avatar {
@@ -68,10 +75,7 @@
     color: #fff;
   }
 
-  .sidebar h1 {
-    font-size: 1.35rem;
-    font-weight: 700;
-  }
+  .sidebar h1 { font-size: 1.35rem; font-weight: 700; }
 
   .badge {
     font-size: 0.85rem;
@@ -81,89 +85,33 @@
     padding: 0.4rem 1rem;
   }
 
-  .sidebar hr {
-    width: 100%;
-    border: none;
-    border-top: 1px solid var(--line);
-    margin: 0.25rem 0;
-  }
+  .sidebar hr { width: 100%; border: none; border-top: 1px solid var(--line); margin: 0.25rem 0; }
 
-  .contact-list {
-    list-style: none;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 1.1rem;
-    text-align: left;
-  }
-
-  .contact-list li {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.85rem;
-  }
-
+  .contact-list { list-style: none; width: 100%; display: flex; flex-direction: column; gap: 1.1rem; text-align: left; }
+  .contact-list li { display: flex; align-items: flex-start; gap: 0.85rem; }
   .contact-list .icon {
-    flex: none;
-    width: 38px;
-    height: 38px;
-    border-radius: 10px;
-    background: var(--accent-dim);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    flex: none; width: 38px; height: 38px; border-radius: 10px;
+    background: var(--accent-dim); display: flex; align-items: center; justify-content: center;
   }
-
-  .contact-list .icon svg {
-    width: 18px;
-    height: 18px;
-    fill: var(--accent);
-  }
-
+  .contact-list .icon svg { width: 18px; height: 18px; fill: var(--accent); }
   .contact-list label {
-    display: block;
-    font-family: var(--font-mono);
-    font-size: 0.65rem;
-    letter-spacing: 0.06em;
-    color: var(--muted);
-    margin-bottom: 0.15rem;
+    display: block; font-family: var(--font-mono); font-size: 0.65rem;
+    letter-spacing: 0.06em; color: var(--muted); margin-bottom: 0.15rem;
   }
-
-  .contact-list a,
-  .contact-list span {
-    font-size: 0.92rem;
-    word-break: break-word;
-  }
-
+  .contact-list a, .contact-list span { font-size: 0.92rem; word-break: break-word; }
   .contact-list a:hover { color: var(--accent); }
 
-  .socials {
-    display: flex;
-    gap: 1rem;
-    margin-top: 0.25rem;
-  }
-
+  .socials { display: flex; gap: 1rem; margin-top: 0.25rem; }
   .socials a {
-    width: 38px;
-    height: 38px;
-    border-radius: 10px;
-    background: var(--card-alt);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--muted);
+    width: 38px; height: 38px; border-radius: 10px; background: var(--card-alt);
+    display: flex; align-items: center; justify-content: center; color: var(--muted);
     transition: color 0.2s ease, background 0.2s ease;
   }
-
-  .socials a:hover {
-    color: var(--accent);
-    background: var(--accent-dim);
-  }
-
+  .socials a:hover { color: var(--accent); background: var(--accent-dim); }
   .socials svg { width: 18px; height: 18px; fill: currentColor; }
 
-  /* ---------- content ---------- */
-  .content { display: flex; flex-direction: column; gap: 2rem; }
+  /* ---------- content / tabs ---------- */
+  .content { display: flex; flex-direction: column; gap: 1.5rem; }
 
   .tabs {
     background: var(--card);
@@ -172,121 +120,131 @@
     display: flex;
     gap: 0.25rem;
     flex-wrap: wrap;
+    position: sticky;
+    top: 2.5rem;
+    z-index: 5;
   }
 
-  .tabs a {
+  .tabs button {
+    font: inherit;
     font-size: 0.92rem;
     font-weight: 500;
     color: var(--muted);
+    background: none;
+    border: none;
+    cursor: pointer;
     padding: 0.7rem 1.1rem;
     border-radius: 10px;
     transition: color 0.2s ease, background 0.2s ease;
   }
+  .tabs button:hover { color: var(--text); }
+  .tabs button.active { color: var(--accent); background: var(--accent-dim); }
 
-  .tabs a:hover { color: var(--text); }
-
-  .tabs a.active {
-    color: var(--accent);
-    background: var(--accent-dim);
-  }
-
-  section { scroll-margin-top: 2rem; }
-
-  .section-title {
-    font-size: 2rem;
-    font-weight: 700;
-    margin-bottom: 0.75rem;
-  }
-
-  .title-underline {
-    width: 46px;
-    height: 4px;
-    background: var(--accent);
-    border-radius: 2px;
-    margin-bottom: 1.75rem;
-  }
-
-  .about p {
-    color: var(--muted);
-    font-size: 1rem;
-    max-width: 68ch;
-    margin-bottom: 1.1rem;
-  }
-
-  .about p:last-child { margin-bottom: 0; }
-
-  .subhead {
-    font-size: 1.35rem;
-    font-weight: 700;
-    margin: 2.5rem 0 1.25rem;
-  }
-
-  .work-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.25rem;
-  }
-
-  .work-card {
+  .tab-panel {
     background: var(--card);
-    border-radius: 14px;
-    padding: 1.75rem;
-    display: flex;
-    gap: 1.1rem;
+    border-radius: 16px;
+    padding: 2.5rem;
+    display: none;
   }
+  .tab-panel.active { display: block; }
 
+  .section-title { font-size: 2rem; font-weight: 700; margin-bottom: 0.75rem; }
+  .title-underline { width: 46px; height: 4px; background: var(--accent); border-radius: 2px; margin-bottom: 1.75rem; }
+
+  /* About */
+  .about p { color: var(--muted); font-size: 1rem; max-width: 68ch; margin-bottom: 1.1rem; }
+  .about p:last-child { margin-bottom: 0; }
+  .subhead { font-size: 1.35rem; font-weight: 700; margin: 2.5rem 0 1.25rem; }
+  .work-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+  .work-card { background: var(--card-alt); border-radius: 14px; padding: 1.75rem; display: flex; gap: 1.1rem; }
   .work-card .icon {
-    flex: none;
-    width: 52px;
-    height: 52px;
-    border-radius: 12px;
-    background: var(--accent-dim);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    flex: none; width: 52px; height: 52px; border-radius: 12px;
+    background: var(--accent-dim); display: flex; align-items: center; justify-content: center;
   }
-
   .work-card .icon svg { width: 24px; height: 24px; fill: var(--accent); }
-
   .work-card h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 0.4rem; }
   .work-card p { color: var(--muted); font-size: 0.92rem; }
 
-  .contact-section {
-    background: var(--card);
-    border-radius: 14px;
-    padding: 2rem;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.5rem 2.5rem;
-    align-items: center;
-    justify-content: space-between;
+  /* Resume */
+  .resume-section { display: flex; gap: 1.25rem; margin-bottom: 3rem; }
+  .resume-section:last-child { margin-bottom: 0; }
+  .resume-section .icon-col { flex: none; display: flex; flex-direction: column; align-items: center; }
+  .section-icon {
+    width: 46px; height: 46px; border-radius: 12px; background: var(--card-alt);
+    display: flex; align-items: center; justify-content: center;
   }
+  .section-icon svg { width: 22px; height: 22px; fill: var(--accent); }
+  .resume-section h2 { font-size: 1.5rem; font-weight: 700; padding-top: 0.5rem; }
+  .resume-body { flex: 1; min-width: 0; }
+  .resume-header { display: flex; align-items: center; gap: 1.1rem; margin-bottom: 1.75rem; }
 
-  .contact-section p { color: var(--muted); max-width: 42ch; }
-
-  .contact-section .links {
-    display: flex;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-    font-family: var(--font-mono);
-    font-size: 0.85rem;
+  .timeline { list-style: none; position: relative; padding-left: 1.5rem; }
+  .timeline::before {
+    content: ''; position: absolute; left: 4px; top: 6px; bottom: 6px; width: 1px; background: var(--line);
   }
-
-  .contact-section .links a:hover { color: var(--accent); }
-
-  /* ---------- focus states ---------- */
-  a:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 3px;
-    border-radius: 4px;
+  .timeline li { position: relative; padding-bottom: 2rem; }
+  .timeline li:last-child { padding-bottom: 0; }
+  .timeline li::before {
+    content: ''; position: absolute; left: -1.5rem; top: 6px;
+    width: 9px; height: 9px; border-radius: 50%; background: var(--accent);
   }
+  .timeline h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.3rem; }
+  .timeline .meta { font-family: var(--font-mono); font-size: 0.85rem; color: var(--accent); margin-bottom: 0.5rem; }
+  .timeline .meta .place { color: var(--muted); }
+  .timeline .meta .place::before { content: '\2014'; margin: 0 0.4rem; color: var(--line); }
+  .timeline p { color: var(--muted); font-size: 0.92rem; max-width: 60ch; }
 
-  /* ---------- responsive ---------- */
+  /* Placeholder sections (Publications, Maps) */
+  .empty-state {
+    border: 1px dashed var(--line);
+    border-radius: 12px;
+    padding: 2.5rem;
+    text-align: center;
+    color: var(--muted);
+  }
+  .empty-state a { color: var(--accent); }
+  .empty-state a:hover { text-decoration: underline; }
+
+  /* Contact */
+  .contact-body p { color: var(--muted); max-width: 50ch; margin-bottom: 1.5rem; }
+  .contact-links { display: flex; gap: 1.5rem; flex-wrap: wrap; font-family: var(--font-mono); font-size: 0.9rem; }
+  .contact-links a:hover { color: var(--accent); }
+
+  /* Artwork carousel (colors unified to the site's indigo accent) */
+  .carousel-root { --items: 5; --gap: 0.75rem; --border-xl: 20px; --border-m: 8px; --border-s: 6px; }
+  .image-thumbnail-carousel { width: 100%; max-width: 720px; display: flex; flex-flow: column; gap: 1rem; position: relative; }
+  .image-thumbnail-carousel img { height: 100%; width: 100%; max-width: 100%; display: block; }
+  .image-display {
+    border-radius: var(--border-xl); overflow: hidden; min-height: 30vmin; aspect-ratio: 16/9;
+    box-shadow: 0 0.375em 0.67em rgba(0,0,0,0.3), 0 0.5em 1.3em rgba(0,0,0,0.22);
+  }
+  .screen {
+    block-size: 100%; display: flex; align-items: center; justify-content: center;
+    background-image: linear-gradient(12deg, #1c1c1c, #262a3d); position: relative; user-select: none;
+  }
+  .screen img { object-fit: contain; }
+  .thumbnail-carousel { display: flex; gap: var(--gap); block-size: 100%; }
+  .carousel__btn { flex: 1 0 max(2.75rem, 5.834%); background: transparent; border: 1px solid transparent; cursor: pointer; display: flex; align-items: center; }
+  .arrow-icon { margin-inline: auto; outline: none; border: 0; display: inline grid; width: max(80%, 1.5rem); height: max(80%, 1.5rem); fill: var(--muted); transition: fill 0.15s ease; }
+  .carousel__btn:hover .arrow-icon { fill: var(--accent); }
+  .carousel__btn:disabled { opacity: 0.25; pointer-events: none; }
+  .carousel__slider { user-select: none; flex-grow: 999; list-style: none; display: flex; gap: var(--gap); padding: 0.5rem; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+  .carousel__slider::-webkit-scrollbar { display: none; }
+  .carousel__slide { cursor: pointer; border-radius: var(--border-m); overflow: hidden; scroll-snap-align: center; flex: 1 0 calc((100% / var(--items)) - 10px); }
+  .carousel__slide img { object-fit: cover; }
+  .active.carousel__slide { outline: 0.125em solid var(--accent); outline-offset: -0.37em; }
+
   @media (max-width: 860px) {
     body { padding: 1.25rem; }
     .page { grid-template-columns: 1fr; }
+    .sidebar, .tabs { position: static; }
     .work-grid { grid-template-columns: 1fr; }
-    .contact-section { flex-direction: column; align-items: flex-start; }
+    .resume-section { gap: 0.85rem; }
+    .tab-panel { padding: 1.75rem; }
+  }
+  @media (max-width: 680px) {
+    .carousel__slide { flex: none; aspect-ratio: 1; block-size: 0.625rem; border-radius: 50%; background: var(--muted); }
+    .thumbnail { display: none; }
   }
 </style>
 </head>
@@ -346,15 +304,16 @@
 
   <main class="content">
     <nav class="tabs">
-      <a href="#about" class="active">About</a>
-      <a href="education.html">Experience</a>
-      <a href="publications.html">Publications</a>
-      <a href="arts.html">Artworks</a>
-      <a href="construction.html">Maps</a>
-      <a href="#contact">Contact</a>
+      <button type="button" data-tab="about" class="active">About</button>
+      <button type="button" data-tab="resume">Resume</button>
+      <button type="button" data-tab="publications">Publications</button>
+      <button type="button" data-tab="artworks">Artworks</button>
+      <button type="button" data-tab="maps">Maps</button>
+      <button type="button" data-tab="contact">Contact</button>
     </nav>
 
-    <section id="about" class="about">
+    <!-- ABOUT -->
+    <section id="tab-about" class="tab-panel about active">
       <h2 class="section-title">About Me</h2>
       <div class="title-underline"></div>
 
@@ -364,36 +323,28 @@
       <h3 class="subhead">What I'm Doing</h3>
       <div class="work-grid">
         <div class="work-card">
-          <span class="icon">
-            <svg viewBox="0 0 24 24"><path d="M12 2 2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-          </span>
+          <span class="icon"><svg viewBox="0 0 24 24"><path d="M12 2 2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></span>
           <div>
             <h3>Remote Sensing &amp; GIS</h3>
             <p>Working with satellite imagery and spatial data to map and monitor landscapes.</p>
           </div>
         </div>
         <div class="work-card">
-          <span class="icon">
-            <svg viewBox="0 0 24 24"><path d="M4 20V10m6 10V4m6 16v-7m6 7V8"/></svg>
-          </span>
+          <span class="icon"><svg viewBox="0 0 24 24"><path d="M4 20V10m6 10V4m6 16v-7m6 7V8"/></svg></span>
           <div>
             <h3>Species Distribution Modeling</h3>
             <p>Modeling species ranges and habitat suitability under environmental change.</p>
           </div>
         </div>
         <div class="work-card">
-          <span class="icon">
-            <svg viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6 2 11c0 4 3 8 10 11 7-3 10-7 10-11 0-5-4.5-9-10-9z"/></svg>
-          </span>
+          <span class="icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6 2 11c0 4 3 8 10 11 7-3 10-7 10-11 0-5-4.5-9-10-9z"/></svg></span>
           <div>
             <h3>Landscape Ecology &amp; Climate Change</h3>
             <p>Studying protected-area resilience and ecosystem services under a changing climate.</p>
           </div>
         </div>
         <div class="work-card">
-          <span class="icon">
-            <svg viewBox="0 0 24 24"><path d="M12 2a9 9 0 1 0 3 17.5c1-.3 1.2-1.6.3-2.1a2 2 0 0 1 1-3.7h1.7A4 4 0 0 0 22 9.7 9 9 0 0 0 12 2zM6.5 12a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm3-5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm3 5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/></svg>
-          </span>
+          <span class="icon"><svg viewBox="0 0 24 24"><path d="M12 2a9 9 0 1 0 3 17.5c1-.3 1.2-1.6.3-2.1a2 2 0 0 1 1-3.7h1.7A4 4 0 0 0 22 9.7 9 9 0 0 0 12 2zM6.5 12a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm3-5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm3 5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/></svg></span>
           <div>
             <h3>Cartography &amp; Illustration</h3>
             <p>Making maps and mixed-media artwork as a self-taught cartographer and illustrator.</p>
@@ -402,9 +353,143 @@
       </div>
     </section>
 
-    <section id="contact" class="contact-section">
+    <!-- RESUME -->
+    <section id="tab-resume" class="tab-panel">
+      <h2 class="section-title">Resume</h2>
+      <div class="title-underline"></div>
+
+      <section class="resume-section">
+        <div class="icon-col">
+          <span class="section-icon"><svg viewBox="0 0 24 24"><path d="M12 4C9.5 2.5 6.5 2 4 2v16c2.5 0 5.5.5 8 2 2.5-1.5 5.5-2 8-2V2c-2.5 0-5.5.5-8 2z"/></svg></span>
+        </div>
+        <div class="resume-body">
+          <div class="resume-header"><h2>Education</h2></div>
+          <ul class="timeline">
+            <li>
+              <h3>PhD, Forestry (Environment Management)</h3>
+              <div class="meta">2018 — 2024<span class="place">Dehradun, India</span></div>
+              <p>Wildlife Institute of India · Registered from Forest Research Institute University. Thesis: "Resilience of Protected Areas of India to Climate Change: Current Status and Future Scenarios"</p>
+            </li>
+            <li>
+              <h3>M.Sc., Environment Management (Natural Resource Management)</h3>
+              <div class="meta">2014 — 2016<span class="place">Dehradun, India</span></div>
+              <p>Forest Research Institute</p>
+            </li>
+            <li>
+              <h3>B.Sc. (Hons.), Zoology</h3>
+              <div class="meta">2011 — 2014<span class="place">Calcutta, India</span></div>
+              <p>Maulana Azad College, Calcutta University</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="resume-section">
+        <div class="icon-col">
+          <span class="section-icon"><svg viewBox="0 0 24 24"><path d="M9 2a1 1 0 0 0-1 1v1H5a2 2 0 0 0-2 2v3h18V6a2 2 0 0 0-2-2h-3V3a1 1 0 0 0-1-1H9zm1 2h4v0h-4zM3 11v7a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7H3z"/></svg></span>
+        </div>
+        <div class="resume-body">
+          <div class="resume-header"><h2>Experience</h2></div>
+          <ul class="timeline">
+            <li>
+              <h3>Postdoctoral Fellow — University of Texas Rio Grande Valley</h3>
+              <div class="meta">Mar 2025 — Present<span class="place">Edinburg, TX</span></div>
+            </li>
+            <li>
+              <h3>Project Consultant, Environmental Planning — Arcadis</h3>
+              <div class="meta">Apr 2025 — Mar 2026<span class="place">GEC, India</span></div>
+            </li>
+            <li>
+              <h3>Consultant-Ecology, Environmental Planning — Arcadis</h3>
+              <div class="meta">Sep 2023 — Apr 2025<span class="place">GEC, India</span></div>
+            </li>
+            <li>
+              <h3>Senior Project Associate — Wildlife Institute of India</h3>
+              <div class="meta">Dec 2022 — Sep 2023<span class="place">Dehradun, India</span></div>
+              <p>Habitat monitoring component, Integrated Development of Wildlife Habitat (IDWH) Project</p>
+            </li>
+            <li>
+              <h3>Newton-Bhabha PhD Placement Fellow</h3>
+              <div class="meta">2022<span class="place">Norwich, UK</span></div>
+              <p>Tyndall Centre for Climate Change Research, University of East Anglia</p>
+            </li>
+            <li>
+              <h3>Senior Research Fellow — Wildlife Institute of India</h3>
+              <div class="meta">May 2020 — Nov 2022<span class="place">Dehradun, India</span></div>
+              <p>Indian Bioresource Information Network (IBIN) Project</p>
+            </li>
+            <li>
+              <h3>Junior Research Fellow — Wildlife Institute of India</h3>
+              <div class="meta">Jun 2018 — May 2020<span class="place">Dehradun, India</span></div>
+              <p>Indian Bioresource Information Network (IBIN) Project</p>
+            </li>
+            <li>
+              <h3>Technical Assistant — Wildlife Institute of India</h3>
+              <div class="meta">Jul 2017 — Jun 2018<span class="place">Dehradun, India</span></div>
+              <p>Biodiversity Conservation and Ganga Rejuvenation Project</p>
+            </li>
+            <li>
+              <h3>Project Intern — Wildlife Institute of India</h3>
+              <div class="meta">Sep 2016 — Jun 2017<span class="place">Dehradun, India</span></div>
+              <p>Biodiversity Conservation and Ganga Rejuvenation Project</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+    </section>
+
+    <!-- PUBLICATIONS (placeholder — no content provided yet) -->
+    <section id="tab-publications" class="tab-panel">
+      <h2 class="section-title">Publications</h2>
+      <div class="title-underline"></div>
+      <div class="empty-state">
+        Publication list coming soon.<br>
+        In the meantime, see my <a href="https://www.researchgate.net/profile/Debanjan-Sarkar" target="_blank" rel="noopener">ResearchGate profile</a>.
+      </div>
+    </section>
+
+    <!-- ARTWORKS -->
+    <section id="tab-artworks" class="tab-panel">
+      <h2 class="section-title">My Artworks</h2>
+      <div class="title-underline"></div>
+
+      <div class="carousel-root">
+        <div class="image-thumbnail-carousel">
+          <section class="image-display">
+            <div class="screen"></div>
+          </section>
+          <section class="thumbnail-carousel">
+            <button type="button" class="carousel__btn prev" aria-label="Previous slide">
+              <svg width="16" height="16" fill="currentColor" class="arrow-icon" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z" />
+              </svg>
+            </button>
+            <ul class="carousel__slider" id="carouselSlider"></ul>
+            <button type="button" class="carousel__btn next" aria-label="Next slide">
+              <svg width="16" height="16" fill="currentColor" class="arrow-icon" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0M4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5z" />
+              </svg>
+            </button>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <!-- MAPS (placeholder — no content provided yet) -->
+    <section id="tab-maps" class="tab-panel">
+      <h2 class="section-title">My Maps</h2>
+      <div class="title-underline"></div>
+      <div class="empty-state">
+        Map and cartography work coming soon.
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="tab-contact" class="tab-panel contact-body">
+      <h2 class="section-title">Contact</h2>
+      <div class="title-underline"></div>
       <p>Interested in collaborating or have a question about my research? Reach out through any of these.</p>
-      <div class="links">
+      <div class="contact-links">
         <a href="mailto:debanjan1193@gmail.com">debanjan1193@gmail.com</a>
         <a href="https://linkedin.com/in/deb1193" target="_blank" rel="noopener">LinkedIn</a>
         <a href="https://github.com/debanjan1193" target="_blank" rel="noopener">GitHub</a>
@@ -414,6 +499,163 @@
   </main>
 
 </div>
+
+<script>
+  // ---------- Tab switching (single-page, no navigation) ----------
+  const tabButtons = document.querySelectorAll('.tabs button[data-tab]');
+  const tabPanels = document.querySelectorAll('.tab-panel');
+
+  function activateTab(tabName, updateHash = true) {
+    let matched = false;
+    tabButtons.forEach(btn => {
+      const isMatch = btn.dataset.tab === tabName;
+      btn.classList.toggle('active', isMatch);
+      if (isMatch) matched = true;
+    });
+    if (!matched) return; // unknown hash, ignore
+
+    tabPanels.forEach(panel => {
+      panel.classList.toggle('active', panel.id === `tab-${tabName}`);
+    });
+
+    if (updateHash) {
+      history.replaceState(null, '', `#${tabName}`);
+    }
+
+    // The artwork carousel computes scroll position from clientWidth, which
+    // is 0 while its panel is display:none. Re-center once it becomes visible.
+    if (tabName === 'artworks' && window.ArtworkCarousel) {
+      requestAnimationFrame(() => window.ArtworkCarousel.refreshScroll());
+    }
+  }
+
+  tabButtons.forEach(btn => {
+    btn.addEventListener('click', () => activateTab(btn.dataset.tab));
+  });
+
+  // Open directly to a tab via URL hash (e.g. yoursite.com/#resume)
+  const initialTab = (location.hash || '#about').slice(1);
+  activateTab(initialTab, false);
+
+  // ---------- Artwork carousel (reads from artworks.json) ----------
+  window.ArtworkCarousel = (() => {
+    const getActiveSlide = () => document.querySelector('.carousel__slide.active');
+    const getFirstSlide = () => document.querySelector('.carousel__slider').firstElementChild;
+    const getLastSlide = () => document.querySelector('.carousel__slider').lastElementChild;
+    const getSiblingSlide = (slide, direction) =>
+      direction === 'prev' ? slide.previousElementSibling : slide.nextElementSibling;
+
+    const updateScreen = (activeSlide) => {
+      const screen = document.querySelector('.image-display .screen');
+      const img = activeSlide.querySelector('img').cloneNode(true);
+      screen.innerHTML = '';
+      screen.appendChild(img);
+    };
+
+    const scrollToActiveSlide = (activeSlide) => {
+      const slider = document.querySelector('.carousel__slider');
+      const { offsetLeft, offsetWidth } = activeSlide;
+      const { clientWidth } = slider;
+      slider.scrollTo({ left: offsetLeft - clientWidth / 2 + offsetWidth / 2, behavior: 'smooth' });
+    };
+
+    const updateActiveSlideClass = (activeSlide) => {
+      document.querySelectorAll('.carousel__slide.active').forEach(s => s.classList.remove('active'));
+      activeSlide.classList.add('active');
+    };
+
+    const updateButtonStates = (activeSlide) => {
+      document.querySelector('.carousel__btn.prev').disabled = !getSiblingSlide(activeSlide, 'prev');
+      document.querySelector('.carousel__btn.next').disabled = !getSiblingSlide(activeSlide, 'next');
+    };
+
+    const updateCarousel = (activeSlide) => {
+      updateActiveSlideClass(activeSlide);
+      updateScreen(activeSlide);
+      scrollToActiveSlide(activeSlide);
+      updateButtonStates(activeSlide);
+    };
+
+    const handleKeydown = (e) => {
+      if (!e.target.closest('.carousel__slider')) return;
+      const activeSlide = getActiveSlide();
+      const actions = {
+        Home: getFirstSlide,
+        End: getLastSlide,
+        ArrowLeft: () => getSiblingSlide(activeSlide, 'prev'),
+        ArrowRight: () => getSiblingSlide(activeSlide, 'next')
+      };
+      const newActiveSlide = actions[e.key]?.() || null;
+      if (newActiveSlide) { e.preventDefault(); updateCarousel(newActiveSlide); }
+    };
+
+    const handleButtonClick = (e) => {
+      const activeSlide = getActiveSlide();
+      const newActiveSlide = getSiblingSlide(activeSlide, e.currentTarget.classList.contains('prev') ? 'prev' : 'next');
+      if (newActiveSlide) updateCarousel(newActiveSlide);
+    };
+
+    const handleCarouselClick = (e) => {
+      const clickedSlide = e.target.closest('.carousel__slide');
+      if (clickedSlide) updateCarousel(clickedSlide);
+    };
+
+    const buildSlides = (artworks) => {
+      const slider = document.getElementById('carouselSlider');
+      slider.innerHTML = '';
+      artworks.forEach((entry) => {
+        const file = typeof entry === 'string' ? entry : entry.file;
+        const alt = typeof entry === 'string' ? 'Artwork' : (entry.alt || 'Artwork');
+        const li = document.createElement('li');
+        li.className = 'carousel__slide';
+        const thumb = document.createElement('div');
+        thumb.className = 'thumbnail';
+        const img = document.createElement('img');
+        img.loading = 'lazy';
+        img.src = file;
+        img.alt = alt;
+        thumb.appendChild(img);
+        li.appendChild(thumb);
+        slider.appendChild(li);
+      });
+    };
+
+    const init = () => {
+      const prevButton = document.querySelector('.carousel__btn.prev');
+      const nextButton = document.querySelector('.carousel__btn.next');
+      const slider = document.querySelector('.carousel__slider');
+      updateCarousel(getFirstSlide());
+      document.addEventListener('keydown', handleKeydown);
+      prevButton.addEventListener('click', handleButtonClick);
+      nextButton.addEventListener('click', handleButtonClick);
+      slider.addEventListener('click', handleCarouselClick);
+    };
+
+    const loadAndInit = async () => {
+      let artworks = ['1.png']; // fallback if artworks.json is missing/invalid
+      try {
+        const response = await fetch('artworks.json');
+        if (response.ok) {
+          const data = await response.json();
+          if (Array.isArray(data) && data.length > 0) artworks = data;
+        }
+      } catch (err) {
+        // Fail silently, keep the fallback above
+      }
+      buildSlides(artworks);
+      init();
+    };
+
+    loadAndInit();
+
+    return {
+      refreshScroll: () => {
+        const activeSlide = getActiveSlide();
+        if (activeSlide) scrollToActiveSlide(activeSlide);
+      }
+    };
+  })();
+</script>
 
 </body>
 </html>
