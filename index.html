@@ -23,6 +23,29 @@
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
+  /* Custom dark scrollbar (Firefox) */
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: var(--card-alt) var(--bg);
+  }
+
+  /* Custom dark scrollbar (WebKit: Chrome, Safari, Edge) */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--bg);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--card-alt);
+    border-radius: 999px;
+    border: 2px solid var(--bg);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--accent);
+  }
+
   body {
     background: var(--bg);
     color: var(--text);
