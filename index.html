@@ -136,16 +136,24 @@
   /* ---------- content / tabs ---------- */
   .content { display: flex; flex-direction: column; gap: 1.5rem; }
 
-  .tabs {
+  .content-card {
+    position: relative;
     background: var(--card);
+    border-radius: 16px;
+    padding: 2.5rem;
+  }
+
+  .tabs {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.25rem;
+    background: var(--card-alt);
     border-radius: 14px;
     padding: 0.5rem;
     display: flex;
     gap: 0.25rem;
     flex-wrap: wrap;
-    position: sticky;
-    top: 2.5rem;
-    z-index: 5;
+    z-index: 2;
   }
 
   .tabs button {
@@ -163,13 +171,12 @@
   .tabs button:hover { color: var(--text); }
   .tabs button.active { color: var(--accent); background: var(--accent-dim); }
 
-  .tab-panel {
-    background: var(--card);
-    border-radius: 16px;
-    padding: 2.5rem;
+  /* Leaves room below the inset nav so headings never sit under it */
+  .content-card > .tab-panel {
     display: none;
+    padding-top: 3.75rem;
   }
-  .tab-panel.active { display: block; }
+  .content-card > .tab-panel.active { display: block; }
 
   .section-title { font-size: 2rem; font-weight: 700; margin-bottom: 0.75rem; }
   .title-underline { width: 46px; height: 4px; background: var(--accent); border-radius: 2px; margin-bottom: 1.75rem; }
@@ -295,10 +302,16 @@
   @media (max-width: 860px) {
     body { padding: 1.25rem; }
     .page { grid-template-columns: 1fr; }
-    .sidebar, .tabs { position: static; }
+    .sidebar { position: static; }
+    .tabs {
+      position: static;
+      margin-bottom: 1.5rem;
+      width: 100%;
+    }
+    .content-card > .tab-panel { padding-top: 0; }
+    .content-card { padding: 1.75rem; }
     .work-grid { grid-template-columns: 1fr; }
     .resume-section { gap: 0.85rem; }
-    .tab-panel { padding: 1.75rem; }
   }
   @media (max-width: 680px) {
     .carousel__slide { flex: none; aspect-ratio: 1; block-size: 0.625rem; border-radius: 50%; background: var(--muted); }
@@ -361,6 +374,7 @@
   </aside>
 
   <main class="content">
+   <div class="content-card">
     <nav class="tabs">
       <button type="button" data-tab="about" class="active">About</button>
       <button type="button" data-tab="resume">Resume</button>
@@ -551,6 +565,7 @@
         <a href="https://www.researchgate.net/profile/Debanjan-Sarkar" target="_blank" rel="noopener">ResearchGate</a>
       </div>
     </section>
+   </div>
   </main>
 
 </div>
